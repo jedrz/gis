@@ -54,3 +54,5 @@ project/plugins/project/
 *.vrb
 *.xdy
 *.tdo
+*.pdf
+*.el
