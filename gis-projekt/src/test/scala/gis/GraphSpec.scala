@@ -7,7 +7,7 @@ class GraphSpec extends UnitSpec {
   it should "add vertex" in {
     var graph = new Graph
     graph = graph.addVertex(1)
-    graph.adjacencyLists(1) should be(Nil)
+    graph.adjacencyLists(1) should be (Nil)
   }
 
   it should "add edge and fill proper adjacency list" in {
