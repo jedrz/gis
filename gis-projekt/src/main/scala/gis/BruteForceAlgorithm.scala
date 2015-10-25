@@ -8,8 +8,8 @@ class BruteForceAlgorithm extends ConsistenceCheckingAlgorithm {
       true
     }
     else {
-      val adjacencyLists = graph.adjacencyLists(current)
-      adjacencyLists.nonEmpty && !adjacencyLists.exists(!reachable(_, to, graph))
+      val adjacencyList = graph.adjacencyLists(current)
+      adjacencyList.nonEmpty && adjacencyList.exists(reachable(_, to, graph))
     }
   }
 
