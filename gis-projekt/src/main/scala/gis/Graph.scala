@@ -18,5 +18,9 @@ class Graph(val adjacencyLists: Map[Vertex, AdjacencyList]) {
     new Graph(newAdjacencyLists)
   }
 
+  def vertices: VerticesList = {
+    adjacencyLists.keys.toList
+  }
+
 }
 
