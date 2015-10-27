@@ -1,8 +1,8 @@
 package gis.algorithms
 
-import gis.{Graph, UnitSpec}
+import gis.{Graphs, UnitSpec}
 
-class BruteForceAlgorithmSpec extends UnitSpec {
+class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
 
   "vertex" should "be reachable" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
@@ -52,10 +52,18 @@ class BruteForceAlgorithmSpec extends UnitSpec {
     result shouldBe true
   }
 
-  "graph" should "be not partially connected" in {
+  "graph" should "not be partially connected" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
 
-    val result = algorithm.isPartiallyConnected(disconnectedGraph)
+    val result = algorithm.isPartiallyConnected
+
+    result shouldBe false
+  }
+
+  "other graph" should "not be partially connected" in {
+    val algorithm = new BruteForceAlgorithm(secondDisconnectedGraph)
+
+    val result = algorithm.isPartiallyConnected
 
     result shouldBe false
   }
@@ -63,42 +71,9 @@ class BruteForceAlgorithmSpec extends UnitSpec {
   "graph" should "be partially connected" in {
     val algorithm = new BruteForceAlgorithm(connectedGraph)
 
-    val result = algorithm.isPartiallyConnected(connectedGraph)
+    val result = algorithm.isPartiallyConnected
 
     result shouldBe true
   }
 
-
-  private def disconnectedGraph: Graph = {
-    val graph = initGraphWithVertices(1 to 11)
-    graph
-      .withEdge(1, 8)
-      .withEdge(1, 9)
-      .withEdge(2, 3)
-      .withEdge(3, 7)
-      .withEdge(4, 5)
-      .withEdge(7, 4)
-      .withEdge(8, 2)
-      .withEdge(9, 10)
-      .withEdge(10, 11)
-      .withEdge(11, 6)
-  }
-
-  private def connectedGraph: Graph = {
-    val graph = initGraphWithVertices(1 to 8)
-    graph
-      .withEdge(1, 2)
-      .withEdge(1, 8)
-      .withEdge(2, 3)
-      .withEdge(3, 4)
-      .withEdge(4, 5)
-      .withEdge(5, 1)
-      .withEdge(8, 7)
-      .withEdge(7, 6)
-      .withEdge(6, 5)
-  }
-
-  private def initGraphWithVertices(range: Range): Graph = {
-    range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
-  }
 }

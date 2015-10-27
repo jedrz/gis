@@ -2,14 +2,13 @@ package gis.algorithms
 
 import gis._
 
-class BruteForceAlgorithm(val graph: Graph) extends ConnectivityCheckingAlgorithm {
+class BruteForceAlgorithm(val graph: Graph) extends GraphConnectivity {
   var visitedVertices = Set[Vertex]()
 
   def reachable(current: Vertex, to: Vertex): Boolean = {
     visitedVertices = visitedVertices + current
-    if (current == to) {
+    if (current == to)
       true
-    }
     else {
       val adjacencyList = graph.adjacencyLists(current).filterNot(visitedVertices.contains)
       adjacencyList.exists(reachable(_, to))
@@ -25,7 +24,7 @@ class BruteForceAlgorithm(val graph: Graph) extends ConnectivityCheckingAlgorith
     graph.vertices.exists(pathNotExists(vertex, _))
   }
 
-  def isPartiallyConnected(graph: Graph): Boolean = {
+  override def isPartiallyConnected: Boolean = {
     !graph.vertices.exists(pathsNotExist)
   }
 
