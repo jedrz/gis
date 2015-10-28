@@ -7,9 +7,9 @@ class BruteForceAlgorithm(val graph: Graph) extends GraphConnectivity {
 
   def reachable(current: Vertex, to: Vertex): Boolean = {
     visitedVertices = visitedVertices + current
-    if (current == to)
+    if (current == to) {
       true
-    else {
+    } else {
       val adjacencyList = graph.adjacencyLists(current).filterNot(visitedVertices.contains)
       adjacencyList.exists(reachable(_, to))
     }
