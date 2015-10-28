@@ -6,7 +6,7 @@ trait Graphs {
     range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
   }
 
-  // Użyć scala-check, który poda listę zdefiowanych przez nas cześciowo spójnych
+  // Użyć scala-check, który poda listę zdefiniowanych przez nas częściowo spójnych
   // i niespójnych grafów, których będziemy używali dla wszystkich algorytmów.
 
   def disconnectedGraph: Graph = {
