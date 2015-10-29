@@ -29,14 +29,34 @@ Graf skierowany $G=(V,E)$ jest częściowo spójny, jeśli dla każdych dwóch
 wierzchołków $u$ i $v$ z $V$ istnieje ścieżka $u \to v$ lub $v \to u$. Należy
 zaimplementować algorytm sprawdzania, czy dany graf $G$ jest częściowo spójny.
 
-\section{Uszczegółowienie tematu}
+\section{Opis merytoryczny zadania}
 
-Temat projektu wydaje się być jasno zdefiniowany i~według nas nie wymaga
-uszczegółowienia.
+Naszym zadaniem jest implementacja algorytmu, który ma sprawdzić, czy podany
+graf skierowany jest częściowo spójny.
 
-\subsection{Implementacja}
+\subsection{Definicje}
 
-Projekt zamierzamy zaimplementować w~języku Scala.
+\begin{description}
+	\item[Ścieżka] trasa, w której krawędzie nie powtarzają się.
+	\item[Trasa] ciąg wierzchołków (gdy graf nie jest multigrafem) lub ciąg
+		postaci $(v_1,e_1,v_2,e_2,\ldots, v_{n-1}, e_{n-1}, v_n)$.
+	\item[Multigraf] graf, dla którego dopuszczamy wielokrotne krawędzie między
+		dwoma wierzchołkami oraz pętle.
+	\item[Pętla] krawędź, której końcami jest ten sam wierzchołek.
+	\item[Graf częściowo spójny] graf, w którym między każdą parą wierzchołków
+		istnieje ścieżka co najmniej w jedną stronę.
+\end{description}
+
+\subsection{Założenia}
+
+\begin{enumerate}
+	\item Więcej niż dwie krawędzie między wierzchołkami oraz pętle nie powinny
+		wpływać na to, czy graf jest częściowo spójny.
+\end{enumerate}
+
+\section{Opis wykorzystywanego algorytmu}
+
+W algorytmie zamierzamy wykorzystać algorytm przeszukiwania grafu w głąb.
 
 \end{document}
 
