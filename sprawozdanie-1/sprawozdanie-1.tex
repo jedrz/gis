@@ -61,12 +61,14 @@ wszerz. Algorytm zarządzałby dwiema kolekcjami wierzchołków -- zbiorem
 wierzchołków $V1$, które stanowią podgraf częściowo spójny (na~początku zbiór
 pusty) oraz wierzchołkami niesprawdzonymi $V2$ wejściowego grafu (na~początku
 wszystkie wierzchołki). Następnie powtarzalibyśmy przechodzenie grafu
-zaczynając z~pierwszego wierzchołka z~$V2$. Dla wykonanego przejścia należy
+pobierając pierwszy wierzchołek z~$V2$. Dla wykonanego przejścia należy
 sprawdzić, czy wszystkie odwiedzone wierzchołki zawierają się w~zbiorze $V1$.
-Jeśli nie, oznacza to, że~graf nie jest częściowo spójny. Jeśli tak, to~należy
-powtórzyć krok, do~momentu, gdy zbiór $V1$, będzie stanowił wszystkie
-wierzchołki wejściowego grafu, lub nie osiągniemy odwiedzonych do~tej pory
-wierzchołków z~$V1$.
+Jeśli nie, oznacza to, że~graf nie jest częściowo spójny (ponieważ
+z~wierzchołków z~$V1$ nie dotarliśmy do~bieżącego wierzchołka, więc z~tego
+wierzchołka musimy osiągnąć wszystkie wierzchołki z~$V1$). Jeśli tak, to~należy
+powtórzyć krok, dodając do~$V1$ odwiedzone wierzchołki, do~momentu, gdy zbiór
+$V1$, będzie stanowił wszystkie wierzchołki wejściowego grafu, lub nie
+osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 
 \end{document}
 
