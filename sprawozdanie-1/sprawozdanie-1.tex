@@ -8,13 +8,13 @@
 \frenchspacing
 
 \title{
-	Grafy i~Sieci \\
+    Grafy i~Sieci \\
     uszczegółowienie tematu
 }
 \author{
-	Łukasz~Jędrzejewski
+    Łukasz~Jędrzejewski
     \and
-	Igor~Rodzik
+    Igor~Rodzik
 }
 
 \date{}
@@ -31,32 +31,42 @@ zaimplementować algorytm sprawdzania, czy dany graf $G$ jest częściowo spójn
 
 \section{Opis merytoryczny zadania}
 
-Naszym zadaniem jest implementacja algorytmu, który ma sprawdzić, czy podany
+Naszym zadaniem jest implementacja algorytmu, który ma~sprawdzić, czy podany
 graf skierowany jest częściowo spójny.
 
 \subsection{Definicje}
 
 \begin{description}
-	\item[Ścieżka] trasa, w której krawędzie nie powtarzają się.
-	\item[Trasa] ciąg wierzchołków (gdy graf nie jest multigrafem) lub ciąg
-		postaci $(v_1,e_1,v_2,e_2,\ldots, v_{n-1}, e_{n-1}, v_n)$.
-	\item[Multigraf] graf, dla którego dopuszczamy wielokrotne krawędzie między
-		dwoma wierzchołkami oraz pętle.
-	\item[Pętla] krawędź, której końcami jest ten sam wierzchołek.
-	\item[Graf częściowo spójny] graf, w którym między każdą parą wierzchołków
-		istnieje ścieżka co najmniej w jedną stronę.
+\item[Ścieżka] trasa, w~której krawędzie nie powtarzają się.
+\item[Trasa] ciąg wierzchołków (gdy graf nie jest multigrafem) lub ciąg
+  postaci $(v_1,e_1,v_2,e_2,\ldots, v_{n-1}, e_{n-1}, v_n)$.
+\item[Multigraf] graf, dla którego dopuszczamy wielokrotne krawędzie między
+  dwoma wierzchołkami oraz pętle.
+\item[Pętla] krawędź, której końcami jest ten sam wierzchołek.
+\item[Graf częściowo spójny] graf, w~którym między każdą parą wierzchołków
+  istnieje ścieżka co~najmniej w~jedną stronę.
 \end{description}
 
 \subsection{Założenia}
 
 \begin{enumerate}
-	\item Więcej niż dwie krawędzie między wierzchołkami oraz pętle nie powinny
-		wpływać na to, czy graf jest częściowo spójny.
+\item Więcej niż dwie krawędzie między wierzchołkami oraz pętle nie powinny
+  wpływać na~to, czy graf jest częściowo spójny.
 \end{enumerate}
 
 \section{Opis wykorzystywanego algorytmu}
 
-W algorytmie zamierzamy wykorzystać algorytm przeszukiwania grafu w głąb.
+W~algorytmie zamierzamy wykorzystać algorytm przeglądanie grafu w~głąb lub
+wszerz. Algorytm zarządzałby dwiema kolekcjami wierzchołków -- zbiorem
+wierzchołków $V1$, które stanowią podgraf częściowo spójny (na~początku zbiór
+pusty) oraz wierzchołkami niesprawdzonymi $V2$ wejściowego grafu (na~początku
+wszystkie wierzchołki). Następnie powtarzalibyśmy przechodzenie grafu
+zaczynając z~pierwszego wierzchołka z~$V2$. Dla wykonanego przejścia należy
+sprawdzić, czy wszystkie odwiedzone wierzchołki zawierają się w~zbiorze $V1$.
+Jeśli nie, oznacza to, że~graf nie jest częściowo spójny. Jeśli tak, to~należy
+powtórzyć krok, do~momentu, gdy zbiór $V1$, będzie stanowił wszystkie
+wierzchołki wejściowego grafu, lub nie osiągniemy odwiedzonych do~tej pory
+wierzchołków z~$V1$.
 
 \end{document}
 
