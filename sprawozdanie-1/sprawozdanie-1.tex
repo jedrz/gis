@@ -50,13 +50,12 @@ graf skierowany jest częściowo spójny.
 \subsection{Założenia}
 
 \begin{enumerate}
-\item Więcej niż dwie krawędzie między wierzchołkami oraz pętle nie powinny
-  wpływać na~to, czy graf jest częściowo spójny.
+	\item Rozpatrywany graf jest spójny.
 \end{enumerate}
 
 \section{Opis wykorzystywanego algorytmu}
 
-W~algorytmie zamierzamy wykorzystać algorytm przeglądanie grafu w~głąb lub
+W~algorytmie zamierzamy wykorzystać algorytm przeglądania grafu w~głąb lub
 wszerz. Algorytm zarządzałby dwiema kolekcjami wierzchołków -- zbiorem
 wierzchołków $V1$, które stanowią podgraf częściowo spójny (na~początku zbiór
 pusty) oraz wierzchołkami niesprawdzonymi $V2$ wejściowego grafu (na~początku
@@ -69,6 +68,9 @@ wierzchołka musimy osiągnąć wszystkie wierzchołki z~$V1$). Jeśli tak, to~n
 powtórzyć krok, dodając do~$V1$ odwiedzone wierzchołki, do~momentu, gdy zbiór
 $V1$, będzie stanowił wszystkie wierzchołki wejściowego grafu, lub nie
 osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
+
+\section{Literatura}
+
 
 \end{document}
 
