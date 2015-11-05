@@ -12,7 +12,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe true
   }
 
-  "vertex" should "not be reachable" in {
+  it should "not be reachable" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
 
     val result = algorithm.reachable(7, 6)
@@ -28,7 +28,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe false
   }
 
-  "path" should "not exist" in {
+  it should "not exist" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
 
     val result = algorithm.pathNotExists(7, 1)
@@ -44,7 +44,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe false
   }
 
-  "paths" should "not exist" in {
+  it should "not exist" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
 
     val result = algorithm.pathsNotExist(9)
@@ -52,12 +52,20 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe true
   }
 
-  "graph" should "not be partially connected" in {
+  "disconnected graph" should "not be partially connected" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
 
     val result = algorithm.isPartiallyConnected
 
     result shouldBe false
+  }
+
+  "connected graph" should "be partially connected" in {
+    val algorithm = new BruteForceAlgorithm(connectedGraph)
+
+    val result = algorithm.isPartiallyConnected
+
+    result shouldBe true
   }
 
   "other graph" should "not be partially connected" in {
@@ -68,12 +76,5 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe false
   }
 
-  "graph" should "be partially connected" in {
-    val algorithm = new BruteForceAlgorithm(connectedGraph)
-
-    val result = algorithm.isPartiallyConnected
-
-    result shouldBe true
-  }
 
 }
