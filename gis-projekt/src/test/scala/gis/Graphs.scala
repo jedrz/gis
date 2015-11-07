@@ -2,12 +2,18 @@ package gis
 
 trait Graphs {
 
-  def initGraphWithVertices(range: Range): Graph = {
-    range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
+  def connectedGraphs: List[Graph] = {
+    List(
+      connectedGraph
+    )
   }
 
-  // Użyć scala-check, który poda listę zdefiniowanych przez nas częściowo spójnych
-  // i niespójnych grafów, których będziemy używali dla wszystkich algorytmów.
+  def disconnectedGraphs: List[Graph] = {
+    List(
+      disconnectedGraph,
+      secondDisconnectedGraph
+    )
+  }
 
   def disconnectedGraph: Graph = {
     val graph = initGraphWithVertices(1 to 11)
@@ -43,5 +49,9 @@ trait Graphs {
       .withEdge(8, 7)
       .withEdge(7, 6)
       .withEdge(6, 5)
+  }
+
+  private def initGraphWithVertices(range: Range): Graph = {
+    range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
   }
 }
