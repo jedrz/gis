@@ -11,14 +11,12 @@ lazy val root = project.in(file(".")).
 
 lazy val gis = crossProject.in(file(".")).
   settings(
-    scalaVersion := "2.11.6",
-    libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
+    scalaVersion := "2.11.6"
   ).
   jvmSettings(
-    // Add JVM-specific settings here
+    libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
   ).
   jsSettings(
-    // Add JS-specific settings here
   )
 
 lazy val gisJVM = gis.jvm
