@@ -51,7 +51,7 @@ trait Graphs {
       .withEdge(6, 5)
   }
 
-  private def initGraphWithVertices(range: Range): Graph = {
+  def initGraphWithVertices(range: Range): Graph = {
     range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
   }
 }
