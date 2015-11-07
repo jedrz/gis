@@ -6,7 +6,9 @@ class AlgorithmsSpec extends UnitSpec with Graphs {
 
   val algorithmFactories: List[Graph => GraphConnectivity] = List(
     graph => new BruteForceAlgorithm(graph),
-    graph => new DFSBasedGraphConnectivity(graph)
+    graph => new BruteForceAlgorithmWithLazyDFS(graph),
+    graph => new DFSBasedGraphConnectivity(graph),
+    graph => new LazyDFSBasedGraphConnectivity(graph)
   )
 
   def checkAlgorithm(algFactory: Graph => GraphConnectivity, graphs: List[Graph], result: Boolean): Unit = {

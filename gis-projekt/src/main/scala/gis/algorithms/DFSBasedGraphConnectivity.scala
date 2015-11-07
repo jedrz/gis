@@ -25,12 +25,9 @@ class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
   private def dfs(vertex: Vertex, visited: Set[Vertex] = Set()): Set[Vertex] = {
     val visitedWithVertex = visited + vertex
     val adjacentNotVisited = graph.adjacencyLists(vertex).filterNot(visitedWithVertex.contains)
-    if (adjacentNotVisited.isEmpty) {
-      visitedWithVertex
-    } else {
-      adjacentNotVisited.foldLeft(visitedWithVertex)(
-        (currentVisited, adjVertex) => dfs(adjVertex, currentVisited))
-    }
+    adjacentNotVisited.foldLeft(visitedWithVertex)(
+      (currentVisited, adjVertex) => dfs(adjVertex, currentVisited)
+    )
   }
 }
 
