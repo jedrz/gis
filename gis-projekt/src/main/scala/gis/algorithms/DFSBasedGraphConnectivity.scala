@@ -22,12 +22,11 @@ class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
     }
   }
 
-  private def dfs(vertex: Vertex, visited: Set[Vertex] = Set()): Set[Vertex] = {
-    val visitedWithVertex = visited + vertex
-    val adjacentNotVisited = graph.adjacencyLists(vertex).filterNot(visitedWithVertex.contains)
-    adjacentNotVisited.foldLeft(visitedWithVertex)(
-      (currentVisited, adjVertex) => dfs(adjVertex, currentVisited)
-    )
+  private def dfs(from: Vertex, visited: Set[Vertex] = Set()): Set[Vertex] = {
+    val visitedWithFrom = visited + from
+    val adjacentNotVisited = graph.adjacencyLists(from).filterNot(visitedWithFrom.contains)
+    val visitedForAdjacent = adjacentNotVisited.flatMap(adjVertex => dfs(adjVertex, visitedWithFrom)).toSet
+    visitedForAdjacent + from
   }
 }
 

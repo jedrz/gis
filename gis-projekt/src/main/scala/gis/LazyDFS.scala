@@ -2,23 +2,23 @@ package gis
 
 class LazyDFS(val graph: Graph) {
 
-  def dfs(vertex: Vertex): Stream[Vertex] = {
-    dfs(vertex, Set.empty)
+  def dfs(from: Vertex): Stream[Vertex] = {
+    dfs(from, Set.empty)
   }
 
-  private def dfs(vertex: Vertex, visited: Set[Vertex]): Stream[Vertex] = {
-    if (visited.contains(vertex)) {
+  private def dfs(from: Vertex, visited: Set[Vertex]): Stream[Vertex] = {
+    if (visited.contains(from)) {
       Stream.empty
     } else {
-      dfsForNotVisited(vertex, visited)
+      dfsForNotVisited(from, visited)
     }
   }
 
-  private def dfsForNotVisited(vertex: Vertex, visited: Set[Vertex]): Stream[Vertex] = {
-    val visitedWithVertex = visited + vertex
-    val adjacentNotVisited = graph.adjacencyLists(vertex).filterNot(visitedWithVertex.contains)
-    lazy val dfsStream = adjacentNotVisited.toStream.flatMap(adjVertex => dfs(adjVertex, visitedWithVertex))
-    vertex #:: dfsStream
+  private def dfsForNotVisited(from: Vertex, visited: Set[Vertex]): Stream[Vertex] = {
+    val visitedWithFrom = visited + from
+    val adjacentNotVisited = graph.adjacencyLists(from).filterNot(visitedWithFrom.contains)
+    lazy val dfsStream = adjacentNotVisited.toStream.flatMap(adjVertex => dfs(adjVertex, visitedWithFrom))
+    from #:: dfsStream
   }
 }
 
