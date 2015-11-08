@@ -11,7 +11,7 @@ class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
   private def isPartiallyConnected(connected: Set[Vertex], notConnected: List[Vertex]): Boolean = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
-        val visited = dfs(firstNotConnected)
+        val visited = dfs(firstNotConnected).toSet
         if (connected subsetOf visited) {
           val notConnectedAfter = restNotConnected.toSet -- visited
           isPartiallyConnected(visited, notConnectedAfter.toList)
@@ -22,11 +22,11 @@ class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
     }
   }
 
-  private def dfs(from: Vertex, visited: Set[Vertex] = Set()): Set[Vertex] = {
+  private def dfs(from: Vertex, visited: Set[Vertex] = Set()): List[Vertex] = {
     val visitedWithFrom = visited + from
     val adjacentNotVisited = graph.adjacencyLists(from).filterNot(visitedWithFrom.contains)
-    val visitedForAdjacent = adjacentNotVisited.flatMap(adjVertex => dfs(adjVertex, visitedWithFrom)).toSet
-    visitedForAdjacent + from
+    val visitedForAdjacent = adjacentNotVisited.flatMap(adjVertex => dfs(adjVertex, visitedWithFrom))
+    from :: visitedForAdjacent
   }
 }
 

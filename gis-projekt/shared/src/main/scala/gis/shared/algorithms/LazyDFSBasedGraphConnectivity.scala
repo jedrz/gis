@@ -1,19 +1,19 @@
 package gis.shared.algorithms
 
 import gis.shared.LazyDFS.toDFS
-import gis.shared.{Graph, Vertex}
+import gis.shared._
 
 class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
 
   override def isPartiallyConnected: Boolean = {
-    isPartiallyConnected(Set(), graph.vertices)
+    isPartiallyConnected(Nil, graph.vertices)
   }
 
-  private def isPartiallyConnected(connected: Set[Vertex], notConnected: List[Vertex]): Boolean = {
+  private def isPartiallyConnected(connected: List[Vertex], notConnected: List[Vertex]): Boolean = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
-        val visited = graph.dfs(firstNotConnected).toSet
-        if (connected subsetOf visited) {
+        val visited = graph.dfs(firstNotConnected).toList
+        if (connected.toSet subsetOf visited.toSet) {
           val notConnectedAfter = restNotConnected.toSet -- visited
           isPartiallyConnected(visited, notConnectedAfter.toList)
         } else {
@@ -22,4 +22,31 @@ class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity 
       case Nil => true
     }
   }
+
+  def solve: (List[Vertex], Boolean) = {
+    solve(Nil, graph.vertices)
+  }
+
+  private def solve(connected: List[Vertex], notConnected: List[Vertex]): Solution = {
+    notConnected match {
+      case firstNotConnected :: restNotConnected =>
+        val visited = graph.dfs(firstNotConnected).toList
+        if (connected.toSet subsetOf visited.toSet) {
+          val notConnectedAfter = restNotConnected.toSet -- visited
+          solve(visited, notConnectedAfter.toList)
+        } else {
+          ((connected ++ visited).distinct, false)
+        }
+      case Nil => (connected, true)
+    }
+  }
+}
+
+object LazyDFSBasedGraphConnectivity {
+
+  implicit def toGraphConnectivity(graph: Graph): LazyDFSBasedGraphConnectivity =
+    new LazyDFSBasedGraphConnectivity(graph)
+
+  implicit def withSolve(graph: Graph): LazyDFSBasedGraphConnectivity =
+    new LazyDFSBasedGraphConnectivity(graph)
 }
