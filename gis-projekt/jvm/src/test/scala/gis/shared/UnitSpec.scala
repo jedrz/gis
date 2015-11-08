@@ -1,4 +1,4 @@
-package gis
+package gis.shared
 
 import org.scalatest.{FlatSpec, Matchers}
 

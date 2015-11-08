@@ -1,6 +1,6 @@
-package gis
+package gis.shared
 
-import gis.LazyDFS.toDFS
+import gis.shared.LazyDFS.toDFS
 
 class LazyDFSSpec extends UnitSpec with Graphs {
 

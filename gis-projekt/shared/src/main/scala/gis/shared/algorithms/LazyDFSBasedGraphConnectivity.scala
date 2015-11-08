@@ -1,7 +1,7 @@
-package gis.algorithms
+package gis.shared.algorithms
 
-import gis.LazyDFS.toDFS
-import gis._
+import gis.shared.LazyDFS.toDFS
+import gis.shared.{Graph, Vertex}
 
 class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
 

@@ -1,4 +1,6 @@
-package gis
+package gis.js
+
+import gis.shared.Graph
 
 import scala.scalajs.js
 

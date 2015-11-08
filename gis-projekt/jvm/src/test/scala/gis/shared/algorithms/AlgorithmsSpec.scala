@@ -1,6 +1,6 @@
-package gis.algorithms
+package gis.shared.algorithms
 
-import gis.{Graph, Graphs, UnitSpec}
+import gis.shared.{Graph, Graphs, UnitSpec}
 
 class AlgorithmsSpec extends UnitSpec with Graphs {
 

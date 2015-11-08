@@ -1,4 +1,4 @@
-package gis
+package gis.shared
 
 trait Graphs {
 

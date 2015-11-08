@@ -1,4 +1,4 @@
-package gis
+package gis.shared
 
 class Graph(val adjacencyLists: Map[Vertex, AdjacencyList]) {
 

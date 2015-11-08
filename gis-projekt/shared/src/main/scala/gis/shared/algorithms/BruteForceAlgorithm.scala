@@ -1,6 +1,6 @@
-package gis.algorithms
+package gis.shared.algorithms
 
-import gis._
+import gis.shared.{Graph, Vertex}
 
 class BruteForceAlgorithm(val graph: Graph) extends GraphConnectivity {
   var visitedVertices = Set[Vertex]()
