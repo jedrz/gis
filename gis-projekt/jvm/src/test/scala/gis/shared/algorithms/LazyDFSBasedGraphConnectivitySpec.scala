@@ -1,7 +1,8 @@
 package gis.shared.algorithms
 
+import gis.jvm.Graphs
+import gis.shared.UnitSpec
 import gis.shared.algorithms.LazyDFSBasedGraphConnectivity.withSolve
-import gis.shared.{Graphs, UnitSpec}
 
 class LazyDFSBasedGraphConnectivitySpec extends UnitSpec with Graphs {
 

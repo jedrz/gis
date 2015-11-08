@@ -1,7 +1,8 @@
 package gis.shared.algorithms
 
+import gis.jvm.Graphs
+import gis.shared.UnitSpec
 import gis.shared.algorithms.DFSBasedGraphConnectivity.toGraphConnectivity
-import gis.shared.{Graphs, UnitSpec}
 
 class DFSBasedGraphConnectivitySpec extends UnitSpec with Graphs {
 

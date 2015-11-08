@@ -1,6 +1,7 @@
 package gis.shared.algorithms
 
-import gis.shared.{Graphs, UnitSpec}
+import gis.jvm.Graphs
+import gis.shared.UnitSpec
 
 class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
 
