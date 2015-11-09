@@ -40,15 +40,13 @@ object Main extends JFrame with Graphs {
   def comboBox: JComboBox[String] = {
     val jFrame = this
     val comboBox = new JComboBox[String]()
-    comboBox.addItem("1 connected")
-    comboBox.addItem("2 connected")
     comboBox.addActionListener(new ActionListener {
       override def actionPerformed(e: ActionEvent): Unit = {
         comboBox.getSelectedItem match {
           case "2 connected" =>
             jFrame.getContentPane.removeAll()
             graphVisualization = new GraphVisualization(jFrame)
-            graphVisualization.visualize(new LazyDFSBasedGraphConnectivity(connectedGraph).solve, secondDisconnectedGraph)
+            graphVisualization.visualize(new LazyDFSBasedGraphConnectivity(secondDisconnectedGraph).solve, secondDisconnectedGraph)
             jFrame.getContentPane.add(panel)
             SwingUtilities.updateComponentTreeUI(jFrame)
           case _ =>
