@@ -1,8 +1,9 @@
 package gis.shared.algorithms
 
+import gis.shared.utils.ClassNameToString
 import gis.shared.{Graph, Vertex}
 
-class BruteForceAlgorithm(val graph: Graph) extends GraphConnectivity {
+class BruteForceAlgorithm(val graph: Graph) extends ClassNameToString {
   var visitedVertices = Set[Vertex]()
 
   def reachable(current: Vertex, to: Vertex): Boolean = {
@@ -24,7 +25,7 @@ class BruteForceAlgorithm(val graph: Graph) extends GraphConnectivity {
     graph.vertices.exists(pathNotExists(vertex, _))
   }
 
-  override def isPartiallyConnected: Boolean = {
+  def isConnected: Boolean = {
     !graph.vertices.exists(pathsNotExist)
   }
 

@@ -43,4 +43,26 @@ class GraphSpec extends UnitSpec {
     graph.adjacencyLists(1) should contain theSameElementsAs List(2)
     graph.adjacencyLists(2) should contain theSameElementsAs List(1)
   }
+
+  it should "create new vertex for empty graph" in {
+    val (graph, newVertex) = new Graph().newVertex
+
+    newVertex should be (1)
+    graph.vertices should contain only 1
+  }
+
+  it should "create next vertex for non empty graph" in {
+    val (graph, _) = new Graph().newVertex
+
+    val (newGraph, newVertex) = graph.newVertex
+
+    newVertex should be (2)
+    newGraph.vertices should contain allOf(1, 2)
+  }
+
+  it should "return edges as pair of vertices" in {
+    val graph = new Graph().withEdge(1, 2).withEdge(2, 3).withEdge(3, 1)
+
+    graph.edges should equal (List((1, 2), (2, 3), (3, 1)))
+  }
 }

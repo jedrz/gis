@@ -4,7 +4,12 @@ trait Graphs {
 
   def connectedGraphs: List[Graph] = {
     List(
-      connectedGraph
+      connectedGraph,
+      // two complete graphs joined
+      new Graph()
+        .withEdge(1, 2).withEdge(2, 1)
+        .withEdge(3, 4).withEdge(4, 3)
+        .withEdge(2, 3)
     )
   }
 
