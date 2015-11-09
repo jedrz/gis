@@ -52,7 +52,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe true
   }
 
-  "disconnected graph" should "not be partially connected" in {
+  "disconnected graph" should "not be connected" in {
     val algorithm = new BruteForceAlgorithm(disconnectedGraph)
 
     val result = algorithm.isConnected
@@ -60,7 +60,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe false
   }
 
-  "connected graph" should "be partially connected" in {
+  "connected graph" should "be connected" in {
     val algorithm = new BruteForceAlgorithm(connectedGraph)
 
     val result = algorithm.isConnected
@@ -68,7 +68,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
     result shouldBe true
   }
 
-  "other graph" should "not be partially connected" in {
+  "other graph" should "not be connected" in {
     val algorithm = new BruteForceAlgorithm(secondDisconnectedGraph)
 
     val result = algorithm.isConnected
