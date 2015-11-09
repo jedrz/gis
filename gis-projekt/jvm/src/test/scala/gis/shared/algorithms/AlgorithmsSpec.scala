@@ -1,36 +1,40 @@
 package gis.shared.algorithms
 
-import gis.shared.{Graph, Graphs, UnitSpec}
+import gis.shared.{Generators, Graph, Graphs, UnitSpec}
+import org.scalatest.prop.PropertyChecks
 
-class AlgorithmsSpec extends UnitSpec with Graphs {
+class AlgorithmsSpec extends UnitSpec with PropertyChecks with Graphs {
 
   val algorithmFactories: List[Graph => GraphConnectivity] = List(
-    graph => new BruteForceAlgorithm(graph),
-    graph => new BruteForceAlgorithmWithLazyDFS(graph),
     graph => new DFSBasedGraphConnectivity(graph),
     graph => new LazyDFSBasedGraphConnectivity(graph)
   )
 
-  def checkAlgorithm(algFactory: Graph => GraphConnectivity, graphs: List[Graph], result: Boolean): Unit = {
-    graphs.zipWithIndex foreach { case (graph, index) =>
-      val algorithm = algFactory(graph)
-      val testDescription = s"return $result for graph $index"
-      val testFn = () => algorithm.isPartiallyConnected should be(result)
-      if (index == 0) {
-        algorithm.getClass.getSimpleName should testDescription in {
-          testFn()
-        }
-      } else {
-        it should testDescription in {
-          testFn()
-        }
+  algorithmFactories foreach { algFactory =>
+    val algName = algFactory(new Graph()).toString
+
+    def checkAlgorithm(graphs: List[Graph], result: Boolean): Unit = {
+      algName should s"return $result for graphs" in {
+        graphs.foreach(graph =>
+          algFactory(graph).isPartiallyConnected should be (result)
+        )
       }
     }
-  }
 
-  algorithmFactories foreach { algFactory =>
-    checkAlgorithm(algFactory, connectedGraphs, result = true)
-    checkAlgorithm(algFactory, disconnectedGraphs, result = false)
+    checkAlgorithm(connectedGraphs, result = true)
+    checkAlgorithm(disconnectedGraphs, result = false)
+
+    algName should "return true for partially connected graphs" in {
+      forAll(Generators.partiallyConnected) { graph =>
+        algFactory(graph).isPartiallyConnected should be (true)
+      }
+    }
+
+    algName should "return false for not partially connected graphs" in {
+      forAll(Generators.notPartiallyConnected) { graph =>
+        algFactory(graph).isPartiallyConnected should be(false)
+      }
+    }
   }
 
 }

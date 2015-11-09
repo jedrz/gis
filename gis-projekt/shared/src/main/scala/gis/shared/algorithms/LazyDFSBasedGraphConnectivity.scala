@@ -2,8 +2,9 @@ package gis.shared.algorithms
 
 import gis.shared.LazyDFS.toDFS
 import gis.shared._
+import gis.shared.utils.ClassNameToString
 
-class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
+class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity with ClassNameToString {
 
   override def isPartiallyConnected: Boolean = {
     isPartiallyConnected(Nil, graph.vertices)
