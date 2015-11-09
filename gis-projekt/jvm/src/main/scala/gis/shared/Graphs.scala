@@ -1,6 +1,4 @@
-package gis.jvm
-
-import gis.shared.Graph
+package gis.shared
 
 trait Graphs {
 
