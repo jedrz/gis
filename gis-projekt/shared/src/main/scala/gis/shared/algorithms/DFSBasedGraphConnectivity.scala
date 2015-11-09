@@ -1,8 +1,9 @@
 package gis.shared.algorithms
 
+import gis.shared.utils.ClassNameToString
 import gis.shared.{Graph, Vertex}
 
-class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity {
+class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity with ClassNameToString {
 
   override def isPartiallyConnected: Boolean = {
     isPartiallyConnected(Set(), graph.vertices)

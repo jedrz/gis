@@ -1,9 +1,10 @@
 package gis.shared.algorithms
 
 import gis.shared.LazyDFS.toDFS
+import gis.shared.utils.ClassNameToString
 import gis.shared.{Graph, Vertex}
 
-class BruteForceAlgorithmWithLazyDFS(val graph: Graph) extends GraphConnectivity {
+class BruteForceAlgorithmWithLazyDFS(val graph: Graph) extends ClassNameToString {
 
   def pathNotExists(from: Vertex, to: Vertex): Boolean = {
     !graph.dfs(from).contains(to)
@@ -13,7 +14,7 @@ class BruteForceAlgorithmWithLazyDFS(val graph: Graph) extends GraphConnectivity
     graph.vertices.exists(pathNotExists(vertex, _))
   }
 
-  override def isPartiallyConnected: Boolean = {
+  def isConnected: Boolean = {
     !graph.vertices.exists(pathsNotExist)
   }
 

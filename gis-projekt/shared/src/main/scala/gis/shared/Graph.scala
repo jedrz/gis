@@ -18,9 +18,26 @@ class Graph(val adjacencyLists: Map[Vertex, AdjacencyList]) {
     new Graph(newAdjacencyLists)
   }
 
+  def newVertex: (Graph, Vertex) = {
+    val newVertex = vertices.reverse.headOption.getOrElse(0) + 1
+    val newGraph = withVertex(newVertex)
+    (newGraph, newVertex)
+  }
+
   def vertices: VerticesList = {
     adjacencyLists.keys.toList
   }
 
+  def edges: EdgesList = {
+    adjacencyLists
+      .toList
+      .flatMap { case (vertex, adjacencyList) =>
+        adjacencyList.map(adjVertex => (vertex, adjVertex))
+      }
+  }
+
+  override def toString: String = {
+    s"Graph($adjacencyLists)"
+  }
 }
 
