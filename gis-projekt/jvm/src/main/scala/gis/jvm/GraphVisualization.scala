@@ -31,7 +31,6 @@ class GraphVisualization(newJFrame: JFrame) {
   }
 
   def visualizeGraph(graph: Graph): Unit = {
-
     setUpVertexStyles
     graphView.getModel.beginUpdate()
     graph.vertices.foreach(addVertex)
