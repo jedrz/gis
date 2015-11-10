@@ -51,13 +51,13 @@ class GraphSpec extends UnitSpec {
     graph.vertices should contain only 1
   }
 
-  it should "create next vertex for non empty graph" in {
-    val (graph, _) = new Graph().newVertex
+  it should "create new vertex for non empty graph" in {
+    val graph = new Graph().withVertex(2).withVertex(1)
 
     val (newGraph, newVertex) = graph.newVertex
 
-    newVertex should be (2)
-    newGraph.vertices should contain allOf(1, 2)
+    newVertex should be (3)
+    newGraph.vertices should contain allOf(1, 2, 3)
   }
 
   it should "return edges as pair of vertices" in {

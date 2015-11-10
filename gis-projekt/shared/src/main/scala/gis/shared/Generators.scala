@@ -4,10 +4,17 @@ import org.scalacheck.Gen
 
 object Generators {
 
-  val complete: Gen[Graph] = {
+  val empty: Gen[Graph] = {
     val sizeGen = Gen.choose(2, 7)
-    sizeGen.map(size => {
-      val emptyGraph = (1 to size).foldLeft(new Graph())((graph, _) => graph.newVertex._1)
+    sizeGen.map(size =>
+      (1 to size).foldLeft(new Graph())(
+        (graph, _) => graph.newVertex._1
+      )
+    )
+  }
+
+  val complete: Gen[Graph] = {
+    empty.map(emptyGraph => {
       val verticesList = emptyGraph.vertices
       val edgesList = for {
         from <- verticesList
@@ -21,6 +28,8 @@ object Generators {
     })
   }
 
+  // Kn --> Km
+  // Kn <-- Km
   val twoCompleteJoinedWithOneEdge: Gen[Graph] = {
     for {
       c1 <- complete
@@ -28,17 +37,8 @@ object Generators {
       fromC1 <- Gen.oneOf(c1.vertices)
       toC2 <- Gen.oneOf(c2.vertices)
     } yield {
-      val (_, newVertex) = c1.newVertex
-
-      val vertexMapper = (vertex: Vertex) => vertex + newVertex - 1
-
-      val twoCompleteGraphsWithVertices = c2.vertices.foldLeft(c1)(
-        (graph, vertex) => graph.withVertex(vertexMapper(vertex))
-      )
-      val twoCompleteGraphs = c2.edges.foldLeft(twoCompleteGraphsWithVertices) { case (graph, (from, to)) =>
-        graph.withEdge(vertexMapper(from), vertexMapper(to))
-      }
-      val joinedGraph = twoCompleteGraphs.withEdge(fromC1, vertexMapper(toC2))
+      val addedGraph = add(c1, c2)
+      val joinedGraph = addedGraph.withEdge(fromC1, vertexMapper(c1)(toC2))
       joinedGraph
     }
   }
@@ -47,7 +47,39 @@ object Generators {
     Gen.oneOf(complete, twoCompleteJoinedWithOneEdge)
   }
 
+  // g1 --> v <-- g2
+  val partiallyConnectedJoinedWithVertex: Gen[Graph] = {
+    for {
+      pc1 <- partiallyConnected
+      pc2 <- partiallyConnected
+      fromPc1 <- Gen.oneOf(pc1.vertices)
+      fromPc2 <- Gen.oneOf(pc2.vertices)
+    } yield {
+      val addedGraph = add(pc1, pc2)
+      val (withJoiningVertex, joiningVertex) = addedGraph.newVertex
+      withJoiningVertex
+        .withEdge(fromPc1, joiningVertex)
+        .withEdge(vertexMapper(pc1)(fromPc2), joiningVertex)
+    }
+  }
+
   val notPartiallyConnected: Gen[Graph] = {
-    Gen.const(new Graph().withVertex(1).withVertex(2))
+    Gen.oneOf(empty, partiallyConnectedJoinedWithVertex)
+  }
+
+  private def add(g1: Graph, g2: Graph): Graph = {
+    val mapper = vertexMapper(g1)(_)
+    val twoGraphsWithVertices = g2.vertices.foldLeft(g1)(
+      (graph, vertex) => graph.withVertex(mapper(vertex))
+    )
+    val twoGraphs = g2.edges.foldLeft(twoGraphsWithVertices) { case (graph, (from, to)) =>
+      graph.withEdge(mapper(from), mapper(to))
+    }
+    twoGraphs
+  }
+
+  private def vertexMapper(graph: Graph)(vertex: Vertex): Vertex = {
+    val (_, newVertex) = graph.newVertex
+    vertex + newVertex - 1
   }
 }
