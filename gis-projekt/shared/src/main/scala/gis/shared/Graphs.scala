@@ -1,6 +1,6 @@
 package gis.shared
 
-trait Graphs {
+object Graphs {
 
   def connectedGraphs: List[Graph] = {
     List(

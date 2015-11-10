@@ -3,7 +3,7 @@ package gis.shared.algorithms
 import gis.shared.{Generators, Graph, Graphs, UnitSpec}
 import org.scalatest.prop.PropertyChecks
 
-class AlgorithmsSpec extends UnitSpec with PropertyChecks with Graphs {
+class AlgorithmsSpec extends UnitSpec with PropertyChecks {
 
   val algorithmFactories: List[Graph => GraphConnectivity] = List(
     graph => new DFSBasedGraphConnectivity(graph),
@@ -21,8 +21,8 @@ class AlgorithmsSpec extends UnitSpec with PropertyChecks with Graphs {
       }
     }
 
-    checkAlgorithm(connectedGraphs, result = true)
-    checkAlgorithm(disconnectedGraphs, result = false)
+    checkAlgorithm(Graphs.connectedGraphs, result = true)
+    checkAlgorithm(Graphs.disconnectedGraphs, result = false)
 
     algName should "return true for partially connected graphs" in {
       forAll(Generators.partiallyConnected) { graph =>
