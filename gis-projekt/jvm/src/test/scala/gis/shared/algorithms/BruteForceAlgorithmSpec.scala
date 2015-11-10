@@ -2,10 +2,10 @@ package gis.shared.algorithms
 
 import gis.shared.{Graphs, UnitSpec}
 
-class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
+class BruteForceAlgorithmSpec extends UnitSpec {
 
   "vertex" should "be reachable" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.reachable(1, 6)
 
@@ -13,7 +13,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   it should "not be reachable" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.reachable(7, 6)
 
@@ -21,7 +21,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   "path" should "exist" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.pathNotExists(1, 5)
 
@@ -29,7 +29,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   it should "not exist" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.pathNotExists(7, 1)
 
@@ -37,7 +37,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   "paths" should "exist" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.pathsNotExist(1)
 
@@ -45,7 +45,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   it should "not exist" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.pathsNotExist(9)
 
@@ -53,7 +53,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   "disconnected graph" should "not be connected" in {
-    val algorithm = new BruteForceAlgorithm(disconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.disconnectedGraph)
 
     val result = algorithm.isConnected
 
@@ -61,7 +61,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   "connected graph" should "be connected" in {
-    val algorithm = new BruteForceAlgorithm(connectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.connectedGraph)
 
     val result = algorithm.isConnected
 
@@ -69,7 +69,7 @@ class BruteForceAlgorithmSpec extends UnitSpec with Graphs {
   }
 
   "other graph" should "not be connected" in {
-    val algorithm = new BruteForceAlgorithm(secondDisconnectedGraph)
+    val algorithm = new BruteForceAlgorithm(Graphs.secondDisconnectedGraph)
 
     val result = algorithm.isConnected
 

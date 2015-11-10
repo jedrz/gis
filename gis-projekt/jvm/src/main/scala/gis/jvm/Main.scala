@@ -7,7 +7,7 @@ import javax.swing._
 import gis.shared.algorithms.LazyDFSBasedGraphConnectivity
 import gis.shared.{Graph, Graphs}
 
-object Main extends JFrame with Graphs {
+object Main extends JFrame {
   var graphVisualization = new GraphVisualization(this)
   val propertiesPanel = panel
 
@@ -16,7 +16,7 @@ object Main extends JFrame with Graphs {
     this.setSize(1200, 800)
     this.setFocusable(false)
     this.setLayout(new GridBagLayout())
-    graphVisualization.visualize(new LazyDFSBasedGraphConnectivity(connectedGraph).solve, connectedGraph)
+    graphVisualization.visualize(new LazyDFSBasedGraphConnectivity(Graphs.connectedGraph).solve, Graphs.connectedGraph)
     this.getContentPane.add(propertiesPanel)
     this.setVisible(true)
   }
@@ -58,10 +58,10 @@ object Main extends JFrame with Graphs {
       comboBox
     }
 
-    var fullComboBox = connectedGraphs.foldLeft(new JComboBox[String])((box, graph) => {
+    var fullComboBox = Graphs.connectedGraphs.foldLeft(new JComboBox[String])((box, graph) => {
       addConnectedGraph(box, graph)
     })
-    fullComboBox = disconnectedGraphs.foldLeft(fullComboBox)((box, graph) => {
+    fullComboBox = Graphs.disconnectedGraphs.foldLeft(fullComboBox)((box, graph) => {
       addDisconnectedGraph(box, graph)
     })
     fullComboBox.addActionListener(new ActionListener {

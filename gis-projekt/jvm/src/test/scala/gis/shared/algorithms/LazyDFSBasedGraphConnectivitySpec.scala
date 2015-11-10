@@ -3,10 +3,10 @@ package gis.shared.algorithms
 import gis.shared.algorithms.LazyDFSBasedGraphConnectivity.withSolve
 import gis.shared.{Graphs, UnitSpec}
 
-class LazyDFSBasedGraphConnectivitySpec extends UnitSpec with Graphs {
+class LazyDFSBasedGraphConnectivitySpec extends UnitSpec {
 
   "Algorithm" should "return solution with list of visited vertices for connected graph" in {
-    val graph = connectedGraph
+    val graph = Graphs.connectedGraph
 
     val (visited, result) = graph.solve
 
@@ -15,7 +15,7 @@ class LazyDFSBasedGraphConnectivitySpec extends UnitSpec with Graphs {
   }
 
   it should "return solution with list of visited vertices for disconnected graph" in {
-    val graph = disconnectedGraph
+    val graph = Graphs.disconnectedGraph
 
     val (visited, result) = graph.solve
 

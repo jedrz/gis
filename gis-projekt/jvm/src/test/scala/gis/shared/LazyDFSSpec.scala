@@ -2,10 +2,10 @@ package gis.shared
 
 import gis.shared.LazyDFS.toDFS
 
-class LazyDFSSpec extends UnitSpec with Graphs {
+class LazyDFSSpec extends UnitSpec {
 
   "Lazy DFS" should "return only visited vertices for disconnected graph" in {
-    val graph = initGraphWithVertices(1 to 4)
+    val graph = Graphs.initGraphWithVertices(1 to 4)
       .withEdge(1, 2)
       .withEdge(2, 3)
       .withEdge(4, 3)
@@ -22,7 +22,7 @@ class LazyDFSSpec extends UnitSpec with Graphs {
   }
 
   it should "return all vertices for connected graph" in {
-    val graph = initGraphWithVertices(1 to 3)
+    val graph = Graphs.initGraphWithVertices(1 to 3)
       .withEdge(1, 2)
       .withEdge(2, 3)
       .withEdge(3, 1)
@@ -33,8 +33,8 @@ class LazyDFSSpec extends UnitSpec with Graphs {
   }
 
   it should "return all vertices for predefined connected graph" in {
-    val visited = connectedGraph.dfs(5).toList
+    val visited = Graphs.connectedGraph.dfs(5).toList
 
-    visited should contain theSameElementsAs connectedGraph.vertices
+    visited should contain theSameElementsAs Graphs.connectedGraph.vertices
   }
 }
