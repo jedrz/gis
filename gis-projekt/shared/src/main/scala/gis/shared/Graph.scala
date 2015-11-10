@@ -19,7 +19,7 @@ class Graph(val adjacencyLists: Map[Vertex, AdjacencyList]) {
   }
 
   def newVertex: (Graph, Vertex) = {
-    val newVertex = vertices.reverse.headOption.getOrElse(0) + 1
+    val newVertex = vertices.sorted.lastOption.getOrElse(0) + 1
     val newGraph = withVertex(newVertex)
     (newGraph, newVertex)
   }
