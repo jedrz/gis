@@ -15,10 +15,13 @@ lazy val gis = crossProject.in(file(".")).
     libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.12.4"
   ).
   jvmSettings(
-    libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
+    libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
+    libraryDependencies += "com.github.monkeysintown" % "jgraphx" % "3.3.1.1"
   ).
   jsSettings(
   )
+
+skip in packageJSDependencies := false
 
 lazy val gisJVM = gis.jvm
 lazy val gisJS = gis.js
