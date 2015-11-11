@@ -26,11 +26,11 @@ class AlgorithmsSpec extends UnitSpec with PropertyChecks {
   }
 
   "All algorithms" should "return true for predefined partially connected graphs" in {
-    checkAllAlgorithmsForGraphs(Graphs.connectedGraphs, result = true)
+    checkAllAlgorithmsForGraphs(Graphs.partiallyConnectedGraphs, result = true)
   }
 
   it should "return false for predefined not partially connected graphs" in {
-    checkAllAlgorithmsForGraphs(Graphs.disconnectedGraphs, result = false)
+    checkAllAlgorithmsForGraphs(Graphs.notPartiallyConnectedGraphs, result = false)
   }
 
   def checkAllAlgorithmsForGraphGen(graphGen: Gen[Graph], result: Boolean): Unit = {
