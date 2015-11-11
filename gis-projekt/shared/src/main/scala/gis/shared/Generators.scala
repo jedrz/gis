@@ -5,7 +5,7 @@ import org.scalacheck.Gen
 object Generators {
 
   val empty: Gen[Graph] = {
-    val sizeGen = Gen.choose(2, 7)
+    val sizeGen = Gen.choose(2, 4)
     sizeGen.map(size =>
       (1 to size).foldLeft(new Graph())(
         (graph, _) => graph.newVertex._1
@@ -30,7 +30,7 @@ object Generators {
 
   // Kn --> Km
   // Kn <-- Km
-  val twoCompleteJoinedWithOneEdge: Gen[Graph] = {
+  val twoCompleteJoinedWithDirectedEdge: Gen[Graph] = {
     for {
       c1 <- complete
       c2 <- complete
@@ -43,8 +43,26 @@ object Generators {
     }
   }
 
-  val partiallyConnected: Gen[Graph] = {
-    Gen.oneOf(complete, twoCompleteJoinedWithOneEdge)
+  // PC <--> C
+  val partiallyConnectedAndCompleteJoinedWithUndirectedEdge: Gen[Graph] = {
+    for {
+      pc <- partiallyConnected
+      c <- complete
+      pCVertex <- Gen.oneOf(pc.vertices)
+      cVertex <- Gen.oneOf(c.vertices)
+    } yield {
+      val addedGraph = add(pc, c)
+      val joinedGraph = addedGraph.withEdgeSymetric(pCVertex, vertexMapper(pc)(cVertex))
+      joinedGraph
+    }
+  }
+
+  def partiallyConnected: Gen[Graph] = {
+    Gen.lzy(Gen.oneOf(
+      complete,
+      twoCompleteJoinedWithDirectedEdge,
+      partiallyConnectedAndCompleteJoinedWithUndirectedEdge
+    ))
   }
 
   // g1 --> v <-- g2
