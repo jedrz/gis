@@ -1,6 +1,7 @@
 package gis.shared.algorithms
 
 import gis.shared.{Generators, Graph, Graphs, UnitSpec}
+import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 
 class AlgorithmsSpec extends UnitSpec with PropertyChecks {
@@ -10,31 +11,38 @@ class AlgorithmsSpec extends UnitSpec with PropertyChecks {
     graph => new LazyDFSBasedGraphConnectivity(graph)
   )
 
-  algorithmFactories foreach { algFactory =>
-    val algName = algFactory(new Graph()).toString
-
-    def checkAlgorithm(graphs: List[Graph], result: Boolean): Unit = {
-      algName should s"return $result for graphs" in {
-        graphs.foreach(graph =>
-          algFactory(graph).isPartiallyConnected should be (result)
-        )
+  def checkAllAlgorithmsForGraph(graph: Graph, result: Boolean): Unit = {
+    algorithmFactories foreach { algFactory =>
+      val alg = algFactory(graph)
+      val algName = alg.toString
+      withClue(s"for algorithm $algName and $graph") {
+        alg.isPartiallyConnected should be (result)
       }
     }
+  }
 
-    checkAlgorithm(Graphs.connectedGraphs, result = true)
-    checkAlgorithm(Graphs.disconnectedGraphs, result = false)
+  def checkAllAlgorithmsForGraphs(graphs: List[Graph], result: Boolean): Unit = {
+    graphs.foreach(graph => checkAllAlgorithmsForGraph(graph, result))
+  }
 
-    algName should "return true for partially connected graphs" in {
-      forAll(Generators.partiallyConnected) { graph =>
-        algFactory(graph).isPartiallyConnected should be (true)
-      }
-    }
+  "All algorithms" should "return true for predefined partially connected graphs" in {
+    checkAllAlgorithmsForGraphs(Graphs.partiallyConnectedGraphs, result = true)
+  }
 
-    algName should "return false for not partially connected graphs" in {
-      forAll(Generators.notPartiallyConnected) { graph =>
-        algFactory(graph).isPartiallyConnected should be(false)
-      }
-    }
+  it should "return false for predefined not partially connected graphs" in {
+    checkAllAlgorithmsForGraphs(Graphs.notPartiallyConnectedGraphs, result = false)
+  }
+
+  def checkAllAlgorithmsForGraphGen(graphGen: Gen[Graph], result: Boolean): Unit = {
+    forAll(graphGen)(graph => checkAllAlgorithmsForGraph(graph, result))
+  }
+
+  it should "return true for generated partially connected graphs" in {
+    checkAllAlgorithmsForGraphGen(Generators.partiallyConnected, result = true)
+  }
+
+  it should "return false for generated not partially connected graphs" in {
+    checkAllAlgorithmsForGraphGen(Generators.notPartiallyConnected, result = false)
   }
 
 }

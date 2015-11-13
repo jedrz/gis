@@ -2,7 +2,7 @@ package gis.shared
 
 object Graphs {
 
-  def connectedGraphs: List[Graph] = {
+  def partiallyConnectedGraphs: List[Graph] = {
     List(
       connectedGraph,
       // two complete graphs joined
@@ -13,7 +13,7 @@ object Graphs {
     )
   }
 
-  def disconnectedGraphs: List[Graph] = {
+  def notPartiallyConnectedGraphs: List[Graph] = {
     List(
       disconnectedGraph,
       secondDisconnectedGraph

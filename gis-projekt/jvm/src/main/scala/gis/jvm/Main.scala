@@ -45,23 +45,23 @@ object Main extends JFrame {
     var graphMap = Map.empty[String, Graph]
 
     def addConnectedGraph(comboBox: JComboBox[String], graph: Graph): JComboBox[String] = {
-      val itemName = "connected - " + comboBox.getItemCount
+      val itemName = "partially connected - " + comboBox.getItemCount
       graphMap = graphMap + (itemName -> graph)
       comboBox.addItem(itemName)
       comboBox
     }
 
     def addDisconnectedGraph(comboBox: JComboBox[String], graph: Graph): JComboBox[String] = {
-      val itemName = "disconnected - " + comboBox.getItemCount
+      val itemName = "not partially connected - " + comboBox.getItemCount
       graphMap = graphMap + (itemName -> graph)
       comboBox.addItem(itemName)
       comboBox
     }
 
-    var fullComboBox = Graphs.connectedGraphs.foldLeft(new JComboBox[String])((box, graph) => {
+    var fullComboBox = Graphs.partiallyConnectedGraphs.foldLeft(new JComboBox[String])((box, graph) => {
       addConnectedGraph(box, graph)
     })
-    fullComboBox = Graphs.disconnectedGraphs.foldLeft(fullComboBox)((box, graph) => {
+    fullComboBox = Graphs.notPartiallyConnectedGraphs.foldLeft(fullComboBox)((box, graph) => {
       addDisconnectedGraph(box, graph)
     })
     fullComboBox.addActionListener(new ActionListener {
