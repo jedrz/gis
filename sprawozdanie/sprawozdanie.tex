@@ -5,11 +5,15 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{amsmath}
+
+\usepackage{chngcntr}
+\counterwithin*{section}{part}
+
 \frenchspacing
 
 \title{
     Grafy i~Sieci \\
-    uszczegółowienie tematu
+    sprawozdania
 }
 \author{
     Łukasz~Jędrzejewski
@@ -22,6 +26,8 @@
 \begin{document}
 
 \maketitle
+
+\part{Sprawozdanie 1}
 
 \section{Temat projektu}
 
@@ -72,7 +78,31 @@ osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 \section{Literatura}
 
 \noindent Cormen, Thomas H.; Leiserson, Charles E.; Rivest, Ronald L.; Stein,
-\emph{Wprowadzenie do algorytmów}.
+\emph{Wprowadzenie do~algorytmów}.
+
+\newpage
+
+\part{Sprawozdanie 2}
+
+\section{Algorytmy}
+
+\subsection{Wielokrotne przeglądanie grafu}
+
+\subsection{Bazujący na~wyszukiwaniu silnie spójnych składowych}
+
+\section{Struktury danych}
+
+\section{Projekt testów}
+
+Obydwa algorytmy przetestujemy na~kilku zdefiniowanych przez nas szczególnych
+przypadkach grafów częściowo spójnych, jak i~nie.
+
+Dodatkowo zamierzamy zaimplementować generatory grafów częściowo spójnych i~nie
+posiadających tej własności, w~celu sprawdzenia poprawności działania
+na~grafach o~większym rozmiarze. Wytworzony generator posłuży nam także
+do~generacji większych grafów oraz weryfikacji złożoności czasowych algorytmów.
+
+\section{Założenia programu}
 
 \end{document}
 
