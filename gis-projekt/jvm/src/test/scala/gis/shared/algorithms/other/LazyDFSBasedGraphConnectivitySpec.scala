@@ -1,6 +1,5 @@
-package gis.shared.algorithms
+package gis.shared.algorithms.other
 
-import gis.shared.algorithms.LazyDFSBasedGraphConnectivity.withSolve
 import gis.shared.{Graphs, UnitSpec}
 
 class LazyDFSBasedGraphConnectivitySpec extends UnitSpec {
@@ -8,7 +7,7 @@ class LazyDFSBasedGraphConnectivitySpec extends UnitSpec {
   "Algorithm" should "return solution with list of visited vertices for connected graph" in {
     val graph = Graphs.connectedGraph
 
-    val (visited, result) = graph.solve
+    val (visited, result) = new LazyDFSBasedGraphConnectivity(graph).solve
 
     result should be (true)
     visited should contain theSameElementsAs graph.vertices
@@ -17,7 +16,7 @@ class LazyDFSBasedGraphConnectivitySpec extends UnitSpec {
   it should "return solution with list of visited vertices for disconnected graph" in {
     val graph = Graphs.disconnectedGraph
 
-    val (visited, result) = graph.solve
+    val (visited, result) = new LazyDFSBasedGraphConnectivity(graph).solve
 
     result should be (false)
     visited.toSet subsetOf graph.vertices.toSet should be (true)

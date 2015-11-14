@@ -7,8 +7,8 @@ import org.scalatest.prop.PropertyChecks
 class AlgorithmsSpec extends UnitSpec with PropertyChecks {
 
   val algorithmFactories: List[Graph => GraphConnectivity] = List(
-    graph => new DFSBasedGraphConnectivity(graph),
-    graph => new LazyDFSBasedGraphConnectivity(graph)
+//    graph => new DFSBasedGraphConnectivity(graph),
+//    graph => new LazyDFSBasedGraphConnectivity(graph)
   )
 
   def checkAllAlgorithmsForGraph(graph: Graph, result: Boolean): Unit = {
