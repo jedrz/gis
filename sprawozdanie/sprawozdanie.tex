@@ -86,7 +86,10 @@ osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 
 \section{Algorytmy}
 
-\subsection{Wielokrotne przeglądanie grafu}
+\subsection{Z~definicji}
+
+Dla każdej pary wierzchołków $(v, u)$ grafu sprawdź, czy można osiągnąć
+wierzchołek $u$ uruchamiając procedurę \emph{DFS} z~$v$ lub odwrotnie.
 
 \subsection{Bazujący na~wyszukiwaniu silnie spójnych składowych}
 
@@ -99,8 +102,8 @@ przypadkach grafów częściowo spójnych, jak i~nie.
 
 Dodatkowo zamierzamy zaimplementować generatory grafów częściowo spójnych i~nie
 posiadających tej własności, w~celu sprawdzenia poprawności działania
-na~grafach o~większym rozmiarze. Wytworzony generator posłuży nam także
-do~generacji większych grafów oraz weryfikacji złożoności czasowych algorytmów.
+na~losowych grafach. Wytworzony generator posłuży nam także do~generacji
+większych grafów oraz weryfikacji złożoności czasowych algorytmów.
 
 \section{Założenia programu}
 
