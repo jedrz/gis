@@ -32,6 +32,17 @@ class DFSForestSpec extends UnitSpec {
     graph.dfsForest should have size 2
   }
 
+  it should "return forest for partially connected graph" in {
+    val graph = Graphs.initGraphWithVertices(1 to 4)
+      .withEdgeSymetric(1, 2)
+      .withEdgeSymetric(3, 4)
+      .withEdge(2, 3)
+
+    val forest = graph.dfsForest
+
+    forest should have size 1
+  }
+
   "Forest" should "return vertices in post-order" in {
     val graph = Graphs.initGraphWithVertices(1 to 4).withEdge(1, 2).withEdge(1, 3).withEdge(2, 3).withEdge(2, 4)
 

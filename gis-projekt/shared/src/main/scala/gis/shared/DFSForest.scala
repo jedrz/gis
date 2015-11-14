@@ -25,7 +25,7 @@ class DFSForest(val graph: Graph) {
     })._2
   }
 
-  private def dfsTree(from: Vertex, visited: Set[Vertex] = Set.empty): Option[Node] = {
+  def dfsTree(from: Vertex, visited: Set[Vertex] = Set.empty): Option[Node] = {
     if (visited.contains(from)) {
       None
     } else {
@@ -38,7 +38,7 @@ class DFSForest(val graph: Graph) {
     val adjacentNotVisited = graph.adjacencyLists(from).filterNot(visitedWithFrom)
     val initialSubtrees = Stream.empty[Node]
     val subtrees = adjacentNotVisited
-      .foldLeft((visited, initialSubtrees))((pair, adjVertex) => {
+      .foldLeft((visitedWithFrom, initialSubtrees))((pair, adjVertex) => {
         val (visited, subtrees) = pair
         val dfsForAdj = dfsTree(adjVertex, visited)
         (visited ++ collectVisited(dfsForAdj), subtrees #::: dfsForAdj.toStream)
