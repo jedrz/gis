@@ -1,6 +1,17 @@
 package gis.shared
 
-case class Node(vertex: Vertex, subtrees: Stream[Node])
+case class Node(vertex: Vertex, subtrees: Stream[Node]) {
+  def postOrder: Stream[Vertex] = {
+    subtrees.flatMap(_.postOrder) #::: Stream(vertex)
+  }
+}
+
+// Please, don't kill me
+object Forest {
+  implicit def postOrder(forest: Stream[Node]): Stream[Vertex] = {
+    forest.flatMap(_.postOrder)
+  }
+}
 
 class DFSForest(val graph: Graph) {
 

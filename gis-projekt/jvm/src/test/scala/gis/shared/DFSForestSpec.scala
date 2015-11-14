@@ -1,10 +1,11 @@
 package gis.shared
 
 import gis.shared.DFSForest.toDFSForest
+import gis.shared.Forest.postOrder
 
 class DFSForestSpec extends UnitSpec {
 
-  it should "return tree for connected graph" in {
+  "DFSForest" should "return tree for connected graph" in {
     val graph = Graphs.initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(2, 3).withEdge(1, 3)
 
     val forest = graph.dfsForest.toList
@@ -29,6 +30,14 @@ class DFSForestSpec extends UnitSpec {
     val graph = Graphs.initGraphWithVertices(1 to 4).withEdge(1, 2).withEdge(3, 4)
 
     graph.dfsForest should have size 2
+  }
+
+  "Forest" should "return vertices in post-order" in {
+    val graph = Graphs.initGraphWithVertices(1 to 4).withEdge(1, 2).withEdge(1, 3).withEdge(2, 3).withEdge(2, 4)
+
+    val forest = graph.dfsForest
+
+    postOrder(forest) should contain inOrder(3, 4, 2, 1)
   }
 
 }
