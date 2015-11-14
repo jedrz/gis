@@ -58,7 +58,7 @@ object Graphs {
       .withEdge(6, 5)
   }
 
-  def initGraphWithVertices(range: Range): Graph = {
-    range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
+  def initGraphWithVertices(seq: Seq[Vertex]): Graph = {
+    seq.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
   }
 }
