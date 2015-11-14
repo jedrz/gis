@@ -16,7 +16,9 @@ object Graphs {
   def notPartiallyConnectedGraphs: List[Graph] = {
     List(
       disconnectedGraph,
-      secondDisconnectedGraph
+      secondDisconnectedGraph,
+      // 2 <- 1 -> 3
+      initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(1, 3)
     )
   }
 

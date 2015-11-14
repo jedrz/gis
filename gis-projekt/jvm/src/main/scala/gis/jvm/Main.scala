@@ -4,7 +4,7 @@ import java.awt.event.{ActionEvent, ActionListener}
 import java.awt.{Dimension, GridBagLayout, Insets}
 import javax.swing._
 
-import gis.shared.algorithms.LazyDFSBasedGraphConnectivity
+import gis.shared.algorithms.other.LazyDFSBasedGraphConnectivity
 import gis.shared.{Graph, Graphs}
 
 object Main extends JFrame {

@@ -1,4 +1,4 @@
-package gis.shared.algorithms
+package gis.shared.algorithms.other
 
 import gis.shared.utils.ClassNameToString
 import gis.shared.{Graph, Vertex}

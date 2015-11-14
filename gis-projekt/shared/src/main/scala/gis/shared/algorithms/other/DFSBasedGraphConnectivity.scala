@@ -1,21 +1,21 @@
-package gis.shared.algorithms
+package gis.shared.algorithms.other
 
 import gis.shared.utils.ClassNameToString
 import gis.shared.{Graph, Vertex}
 
-class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity with ClassNameToString {
+class DFSBasedGraphConnectivity(val graph: Graph) extends ClassNameToString {
 
-  override def isPartiallyConnected: Boolean = {
-    isPartiallyConnected(Set(), graph.vertices)
+  def isSomehowConnected: Boolean = {
+    isSomehowConnected(Set(), graph.vertices)
   }
 
-  private def isPartiallyConnected(connected: Set[Vertex], notConnected: List[Vertex]): Boolean = {
+  private def isSomehowConnected(connected: Set[Vertex], notConnected: List[Vertex]): Boolean = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
         val visited = dfs(firstNotConnected).toSet
         if (connected subsetOf visited) {
           val notConnectedAfter = restNotConnected.toSet -- visited
-          isPartiallyConnected(visited, notConnectedAfter.toList)
+          isSomehowConnected(visited, notConnectedAfter.toList)
         } else {
           false
         }
@@ -29,8 +29,4 @@ class DFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity with
     val visitedForAdjacent = adjacentNotVisited.flatMap(adjVertex => dfs(adjVertex, visitedWithFrom))
     from :: visitedForAdjacent
   }
-}
-
-object DFSBasedGraphConnectivity {
-  implicit def toGraphConnectivity(graph: Graph): DFSBasedGraphConnectivity = new DFSBasedGraphConnectivity(graph)
 }
