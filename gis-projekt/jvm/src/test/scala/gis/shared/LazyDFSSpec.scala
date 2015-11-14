@@ -37,4 +37,12 @@ class LazyDFSSpec extends UnitSpec {
 
     visited should contain theSameElementsAs Graphs.connectedGraph.vertices
   }
+
+  it should "return streams of vertices without repeats" in {
+    val graph = Graphs.initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(1, 3).withEdge(2, 3)
+
+    val visited = graph.dfs(1).toList
+
+    visited should contain theSameElementsAs graph.vertices
+  }
 }
