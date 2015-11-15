@@ -6,9 +6,9 @@ import gis.shared.{Graph, SCC, Vertex}
 
 class KosarajuSCC(val graph: Graph) {
 
-  def scc: SCC = {
+  def findSCC: SCC = {
     val sccVertices = postOrder(graph.dfsForest).reverse
-    val transponsed = graph.transposed
+    val transposed = graph.transpose
     val initialVisited = Set.empty[Vertex]
     val initialScc: SCC = Stream.empty
     sccVertices.foldLeft((initialVisited, initialScc))((pair, vertex) => {
@@ -16,7 +16,7 @@ class KosarajuSCC(val graph: Graph) {
       if (visited(vertex)) {
         (visited, scc)
       } else {
-        val visitedForDfs = transponsed.dfsTree(vertex, visited).get.postOrder
+        val visitedForDfs = transposed.dfsTree(vertex, visited).get.postOrder
         (visited ++ visitedForDfs, visitedForDfs #:: scc)
       }
     })._2

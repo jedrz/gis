@@ -36,7 +36,7 @@ class Graph(val adjacencyLists: Map[Vertex, AdjacencyList]) {
       }
   }
 
-  def transposed: Graph = {
+  def transpose: Graph = {
     val empty = Graphs.initGraphWithVertices(vertices)
     edges.foldLeft(empty) { case (graph, (from, to)) =>
         graph.withEdge(to, from)

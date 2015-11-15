@@ -7,7 +7,7 @@ import gis.shared.{Graph, Graphs, SCC, Vertex}
 class SCCBasedAlgorithm(val graph: Graph) extends GraphConnectivity with ClassNameToString {
 
   override def isPartiallyConnected: Boolean = {
-    val scc = graph.scc
+    val scc = graph.findSCC
     val mapping = verticesMapping(scc)
     val vertices = scc.indices
     val empty = Graphs.initGraphWithVertices(vertices)

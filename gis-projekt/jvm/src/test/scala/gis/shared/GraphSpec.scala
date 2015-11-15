@@ -69,7 +69,7 @@ class GraphSpec extends UnitSpec {
   it should "transpose graph (reverse direction of all edges)" in {
     val graph = Graphs.initGraphWithVertices(1 to 4).withEdge(1, 2).withEdge(1, 3)
 
-    val transposed = graph.transposed
+    val transposed = graph.transpose
 
     transposed.vertices should contain allOf(1, 2, 3, 4)
     transposed.edges should contain allOf((2, 1), (3, 1))

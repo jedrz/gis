@@ -12,7 +12,7 @@ class KosarajuSCCSpec extends UnitSpec {
       .withEdge(2, 3)
 
     // Trochę słabo, że wymaga kolejności.
-    graph.scc should be (Stream(Stream(4, 3), Stream(2, 1)))
+    graph.findSCC should be (Stream(Stream(4, 3), Stream(2, 1)))
   }
 
 }
