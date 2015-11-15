@@ -13,6 +13,7 @@ object Forest {
   }
 }
 
+// http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.7441&rep=rep1&type=pdf
 class DFSForest(val graph: Graph) {
 
   def dfsForest: Stream[Node] = {

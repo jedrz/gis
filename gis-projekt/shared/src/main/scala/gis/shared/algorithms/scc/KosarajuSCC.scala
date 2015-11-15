@@ -4,6 +4,8 @@ import gis.shared.DFSForest.toDFSForest
 import gis.shared.Forest.postOrder
 import gis.shared.{Graph, SCC, Vertex}
 
+// http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/GraphAlgor/strongComponent.htm
+// https://en.wikipedia.org/wiki/Kosaraju's_algorithm
 class KosarajuSCC(val graph: Graph) {
 
   def findSCC: SCC = {
