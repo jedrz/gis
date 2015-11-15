@@ -1,6 +1,11 @@
 general:
   build_dir: gis-projekt
 
+machine:
+  java:
+    version:
+      oraclejdk8
+
 dependencies:
   pre:
     - wget -q https://dl.bintray.com/sbt/debian/sbt-0.13.9.deb

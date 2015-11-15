@@ -21,6 +21,9 @@ lazy val gis = crossProject.in(file(".")).
   jsSettings(
   )
 
+scalacOptions += "-target:jvm-1.8"
+scalacOptions += "-source:jvm-1.8"
+
 skip in packageJSDependencies := false
 
 lazy val gisJVM = gis.jvm

@@ -1,8 +1,8 @@
 package gis.jvm
 
-import java.awt.{Dimension, GridBagConstraints}
+import java.awt.GridBagConstraints
 import java.util
-import javax.swing.{BorderFactory, JFrame}
+import javax.swing.{BorderFactory, JPanel}
 
 import com.mxgraph.layout.mxFastOrganicLayout
 import com.mxgraph.model.mxCell
@@ -11,8 +11,8 @@ import com.mxgraph.util.mxConstants._
 import com.mxgraph.view.mxGraph
 import gis.shared.{AdjacencyList, Graph, Solution, Vertex}
 
-class GraphVisualization(newJFrame: JFrame) {
-  val jFrame: JFrame = newJFrame
+class GraphVisualization(newJPanel: JPanel) {
+  val jPanel: JPanel = newJPanel
   val graphView: mxGraph = new mxGraph
   var vertexMap: Map[Int, mxCell] = Map.empty
   var solution: Solution = (Nil, false)
@@ -32,6 +32,7 @@ class GraphVisualization(newJFrame: JFrame) {
   }
 
   def visualizeGraph(graph: Graph): Unit = {
+    jPanel.removeAll()
     setUpVertexStyles()
     graphView.getModel.beginUpdate()
     graph.vertices.foreach(addVertex)
@@ -40,15 +41,13 @@ class GraphVisualization(newJFrame: JFrame) {
     graphView.setCellsSelectable(false)
     val graphComponent = new mxGraphComponent(graphView)
     graphComponent.setBorder(BorderFactory.createEmptyBorder())
-    graphComponent.setPreferredSize(new Dimension(1000, 800))
-    graphComponent.setMinimumSize(new Dimension(1000, 800))
     graphComponent.setFocusable(false)
     graphComponent.setConnectable(false)
     graphComponent.getLayout
     val myLayout = new mxFastOrganicLayout(graphView)
     myLayout.setUseBoundingBox(false)
     myLayout.execute(graphView.getDefaultParent)
-    jFrame.getContentPane.add(graphComponent, new GridBagConstraints())
+    jPanel.add(graphComponent, new GridBagConstraints)
   }
 
   def visualize(solution: Solution, graph: Graph): Unit = {
