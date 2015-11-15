@@ -1,5 +1,6 @@
 package gis.shared.algorithms
 
+import gis.shared.algorithms.other.LazyDFSBasedGraphConnectivity
 import gis.shared.{Generators, Graph, Graphs, UnitSpec}
 import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
@@ -8,7 +9,8 @@ class AlgorithmsSpec extends UnitSpec with PropertyChecks {
 
   val algorithmFactories: List[Graph => GraphConnectivity] = List(
     graph => new SimpleAlgorithm(graph),
-    graph => new SCCBasedAlgorithm(graph)
+    graph => new SCCBasedAlgorithm(graph),
+    graph => new LazyDFSBasedGraphConnectivity(graph)
   )
 
   def checkAllAlgorithmsForGraph(graph: Graph, result: Boolean): Unit = {

@@ -1,22 +1,26 @@
 package gis.shared.algorithms.other
 
+import gis.shared.DFSForest.toDFSForest
+import gis.shared.Forest.postOrder
 import gis.shared.LazyDFS.toDFS
 import gis.shared._
+import gis.shared.algorithms.GraphConnectivity
 import gis.shared.utils.ClassNameToString
 
-class LazyDFSBasedGraphConnectivity(val graph: Graph) extends ClassNameToString {
+class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity with ClassNameToString {
 
-  def isSomehowConnected: Boolean = {
-    isSomehowConnected(Nil, graph.vertices)
+  override def isPartiallyConnected: Boolean = {
+    val forest = graph.dfsForest
+    isPartiallyConnected(Nil, postOrder(forest).toList)
   }
 
-  private def isSomehowConnected(connected: List[Vertex], notConnected: List[Vertex]): Boolean = {
+  private def isPartiallyConnected(connected: List[Vertex], notConnected: List[Vertex]): Boolean = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
         val visited = graph.dfs(firstNotConnected).toList
         if (connected.toSet subsetOf visited.toSet) {
           val notConnectedAfter = restNotConnected.toSet -- visited
-          isSomehowConnected(visited, notConnectedAfter.toList)
+          isPartiallyConnected(visited, notConnectedAfter.toList)
         } else {
           false
         }
