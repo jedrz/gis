@@ -6,4 +6,5 @@ package object shared {
   type VerticesList = List[Vertex]
   type EdgesList = List[(Vertex, Vertex)]
   type Solution = (List[Vertex], Boolean)
+  type SCC = Stream[Stream[Vertex]]
 }

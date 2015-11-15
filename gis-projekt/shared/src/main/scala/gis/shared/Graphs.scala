@@ -9,7 +9,9 @@ object Graphs {
       new Graph()
         .withEdge(1, 2).withEdge(2, 1)
         .withEdge(3, 4).withEdge(4, 3)
-        .withEdge(2, 3)
+        .withEdge(2, 3),
+      // 0 -> 1 -> 2 -> 0, 0 -> 3 -> 4
+      initGraphWithVertices(1 to 4).withEdge(0, 1).withEdge(1, 2).withEdge(2, 0).withEdge(0, 3).withEdge(3, 4)
     )
   }
 
@@ -58,7 +60,7 @@ object Graphs {
       .withEdge(6, 5)
   }
 
-  def initGraphWithVertices(range: Range): Graph = {
-    range.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
+  def initGraphWithVertices(seq: Seq[Vertex]): Graph = {
+    seq.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
   }
 }
