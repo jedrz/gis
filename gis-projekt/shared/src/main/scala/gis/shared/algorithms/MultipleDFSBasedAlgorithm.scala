@@ -1,17 +1,20 @@
-package gis.shared.algorithms.other
+package gis.shared.algorithms
 
 import gis.shared.DFSForest.toDFSForest
 import gis.shared.Forest.postOrder
 import gis.shared.LazyDFS.toDFS
 import gis.shared._
-import gis.shared.algorithms.GraphConnectivity
 import gis.shared.utils.ClassNameToString
 
-class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity with ClassNameToString {
+class MultipleDFSBasedAlgorithm(val graph: Graph) extends GraphConnectivity with ClassNameToString {
+
+  private def verticesToVisit: List[Vertex] = {
+    val forest = graph.dfsForest
+    postOrder(forest).toList
+  }
 
   override def isPartiallyConnected: Boolean = {
-    val forest = graph.dfsForest
-    isPartiallyConnected(Nil, postOrder(forest).toList)
+    isPartiallyConnected(Nil, verticesToVisit)
   }
 
   private def isPartiallyConnected(connected: List[Vertex], notConnected: List[Vertex]): Boolean = {
@@ -29,7 +32,7 @@ class LazyDFSBasedGraphConnectivity(val graph: Graph) extends GraphConnectivity 
   }
 
   def solve: (List[Vertex], Boolean) = {
-    solve(Nil, graph.vertices)
+    solve(Nil, verticesToVisit)
   }
 
   private def solve(connected: List[Vertex], notConnected: List[Vertex]): Solution = {
