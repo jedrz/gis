@@ -87,11 +87,49 @@ osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 \section{Algorytmy}
 
 \subsection{Z~definicji}
+\label{sec:from-definion-alg}
 
 Dla każdej pary wierzchołków $(v, u)$ grafu sprawdź, czy można osiągnąć
 wierzchołek $u$ uruchamiając procedurę \emph{DFS} z~$v$ lub odwrotnie.
 
-\subsection{Bazujący na~wyszukiwaniu silnie spójnych składowych}
+\subsection{Bazujący na~silnie spójnych składowych}
+
+Idea kolejnego algorytmu polega na~wyznaczeniu wszystkich silnie spójnych
+składowych grafu. Następnie każdą silnie spójną składową zastępujemy
+pojedynczym wierzchołkiem. Składowe łączymy krawędzią, jeśli istnieje krawędź
+między wierzchołkami należącymi do~składowych. Na~tak zminimalizowanym grafie,
+uruchamiamy algorytm sprawdzający z~sekcji~\ref{sec:from-definion-alg}, czy
+graf jest częściowo spójny.
+
+% TODO: przykład transformacji?
+
+\subsubsection{Wyznaczenie silnie spójnych składowych}
+
+Jednym z~algorytmów wyznaczających silnie spójne składowe grafu to~algorytm
+\textbf{Kosaraju}. Wykorzystuje on~dwa przejścia w~głąb oraz transpozycję
+grafu.
+
+Graf \textbf{transponowany} $G^T$ to~graf, w~którym krawędzie są~odwrócone.
+
+Algorytm zaś wygląda następująco:
+
+\begin{enumerate}
+\item\label{sec:kosaraju-alg-1-pt} Wyznaczamy listę wierzchołków w~kolejności
+  przetworzenia wierzchołków grafu algorytmem DFS.\@
+\item\label{sec:kosaraju-alg-2-pt} Wykonujemy algorytm DFS dla grafu
+  transponowanego, dla każdego wierzchołka
+  z~punktu~\ref{sec:kosaraju-alg-1-pt}. Każde otrzymane drzewo DFS, zawiera
+  wierzchołki należące do~jednej silnie spójnej składowej.
+\end{enumerate}
+
+W~punkcie~\ref{sec:kosaraju-alg-1-pt} ważne jest, aby procedurą DFS odwiedzić
+wszystkie wierzchołki. W~ten sposób otrzymamy las drzew DFS.\@ Przechodząc
+każde drzewo w~kolejności \emph{post-order} (najpierw podrzewa, na~koniec
+węzeł), otrzymamy kolejność odwiedzania wierzchołków wymaganą w~kolejnym kroku.
+
+Krok~\ref{sec:kosaraju-alg-2-pt} algorytmu wykorzystuje własność grafu
+transponowanego taką, że~posiada on~identyczne silnie spójne składowe, jak graf
+pierwotny.
 
 \section{Struktury danych}
 
