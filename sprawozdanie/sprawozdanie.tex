@@ -51,6 +51,9 @@ graf skierowany jest częściowo spójny.
 \item[Pętla] krawędź, której końcami jest ten sam wierzchołek.
 \item[Graf częściowo spójny] graf, w~którym między każdą parą wierzchołków
   istnieje ścieżka co~najmniej w~jedną stronę.
+\item[Listy sąsiedztwa] sposób prezentacji grafu, w którym każdy wierzchołek ma
+	przypisaną listę wierzchołków, do których poprowadzona jest krawędź z tego
+	wierzchołka.
 \end{description}
 
 \subsection{Założenia}
@@ -132,6 +135,16 @@ transponowanego taką, że~posiada on~identyczne silnie spójne składowe, jak g
 pierwotny.
 
 \section{Struktury danych}
+
+Graf został przedstawiony w naszej aplikacji jako listy sąsiedztwa. Wierzchołki
+są oznaczone liczbami całkowitymi. Krawędź przedstawiona została jako para
+wierzchołków. Na potrzeby projektu powstała również lista grafów, która służy do
+przechowywania grafów utworzonych ręcznie na potrzeby testów jednostkowych oraz
+prezentacji możliwości algorytmu w interfejsie użytkownika. Dostępne są również
+lista przechowująca wszystkie wierzchołki grafu i analogiczna lista
+przechowująca krawędzie. Wynik algorytmu przechowywany jest wraz z grafem w
+osobnej strukturze co ma na celu uproszczenie implementacji interfejsu
+użytkownika.
 
 \section{Projekt testów}
 
