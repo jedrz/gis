@@ -8,7 +8,8 @@ class AlgorithmsSpec extends UnitSpec with PropertyChecks {
 
   val algorithmFactories: List[Graph => GraphConnectivity] = List(
     graph => new SimpleAlgorithm(graph),
-    graph => new SCCBasedAlgorithm(graph)
+    graph => new SCCBasedAlgorithm(graph),
+    graph => new MultipleDFSBasedAlgorithm(graph)
   )
 
   def checkAllAlgorithmsForGraph(graph: Graph, result: Boolean): Unit = {

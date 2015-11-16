@@ -39,6 +39,7 @@ object Graphs {
       .withEdge(11, 6)
   }
 
+  // 1 -> 2 <- 3
   def secondDisconnectedGraph: Graph = {
     val graph = initGraphWithVertices(1 to 3)
     graph
