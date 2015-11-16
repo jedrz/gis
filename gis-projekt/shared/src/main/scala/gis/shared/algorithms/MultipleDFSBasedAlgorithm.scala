@@ -14,16 +14,16 @@ class MultipleDFSBasedAlgorithm(val graph: Graph) extends GraphConnectivity with
   }
 
   override def isPartiallyConnected: Boolean = {
-    isPartiallyConnected(Nil, verticesToVisit)
+    isPartiallyConnected(Set.empty, verticesToVisit)
   }
 
-  private def isPartiallyConnected(connected: List[Vertex], notConnected: List[Vertex]): Boolean = {
+  private def isPartiallyConnected(connected: Set[Vertex], notConnected: List[Vertex]): Boolean = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
-        val visited = graph.dfs(firstNotConnected).toList
-        if (connected.toSet subsetOf visited.toSet) {
-          val notConnectedAfter = restNotConnected.toSet -- visited
-          isPartiallyConnected(visited, notConnectedAfter.toList)
+        val visited = graph.dfs(firstNotConnected)
+        if (connected subsetOf visited.toSet) {
+          val notConnectedAfter = restNotConnected diff visited
+          isPartiallyConnected(visited.toSet, notConnectedAfter)
         } else {
           false
         }
@@ -32,20 +32,20 @@ class MultipleDFSBasedAlgorithm(val graph: Graph) extends GraphConnectivity with
   }
 
   def solve: (List[Vertex], Boolean) = {
-    solve(Nil, verticesToVisit)
+    solve(Set.empty, verticesToVisit)
   }
 
-  private def solve(connected: List[Vertex], notConnected: List[Vertex]): Solution = {
+  private def solve(connected: Set[Vertex], notConnected: List[Vertex]): Solution = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
-        val visited = graph.dfs(firstNotConnected).toList
-        if (connected.toSet subsetOf visited.toSet) {
-          val notConnectedAfter = restNotConnected.toSet -- visited
-          solve(visited, notConnectedAfter.toList)
+        val visited = graph.dfs(firstNotConnected)
+        if (connected subsetOf visited.toSet) {
+          val notConnectedAfter = restNotConnected diff visited
+          solve(visited.toSet, notConnectedAfter)
         } else {
-          ((connected ++ visited).distinct, false)
+          (visited.toList, false)
         }
-      case Nil => (connected, true)
+      case Nil => (connected.toList, true)
     }
   }
 }
