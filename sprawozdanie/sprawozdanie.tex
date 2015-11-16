@@ -5,9 +5,18 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{amsmath}
+\usepackage{float}
 
+% reset numerowania sekcji w częściach
 \usepackage{chngcntr}
 \counterwithin*{section}{part}
+
+% zagnieżdżone numerowanie list
+\usepackage{enumitem}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,automata}
+\tikzset{>=stealth',shorten >=1pt,auto,thick,main node/.style={circle,fill=blue!30,draw,minimum size=1cm,inner sep=0pt,font=\sffamily\Large\bfseries},wordnet/.style={draw=none,fill=none,inner sep=0pt},edge/.style={thick,double}}
 
 \frenchspacing
 
@@ -101,8 +110,8 @@ Idea kolejnego algorytmu polega na~wyznaczeniu wszystkich silnie spójnych
 składowych grafu. Następnie każdą silnie spójną składową zastępujemy
 pojedynczym wierzchołkiem. Składowe łączymy krawędzią, jeśli istnieje krawędź
 między wierzchołkami należącymi do~składowych. Na~tak zminimalizowanym grafie,
-uruchamiamy algorytm sprawdzający z~sekcji~\ref{sec:from-definion-alg}, czy
-graf jest częściowo spójny.
+uruchamiamy algorytm sprawdzający z~sekcji~\ref{sec:from-definion-alg}
+lub~\ref{sec:multiple-dfs}, czy graf jest częściowo spójny.
 
 % TODO: przykład transformacji?
 
@@ -118,7 +127,8 @@ Algorytm zaś wygląda następująco:
 
 \begin{enumerate}
 \item\label{sec:kosaraju-alg-1-pt} Wyznaczamy listę wierzchołków w~kolejności
-  przetworzenia wierzchołków grafu algorytmem DFS.\@
+  przetworzenia wierzchołków grafu algorytmem DFS, czyli odwrotną
+  do~posortowania topologicznego.
 \item\label{sec:kosaraju-alg-2-pt} Wykonujemy algorytm DFS dla grafu
   transponowanego, dla każdego wierzchołka
   z~punktu~\ref{sec:kosaraju-alg-1-pt}. Każde otrzymane drzewo DFS, zawiera
@@ -132,7 +142,57 @@ węzeł), otrzymamy kolejność odwiedzania wierzchołków wymaganą w~kolejnym 
 
 Krok~\ref{sec:kosaraju-alg-2-pt} algorytmu wykorzystuje własność grafu
 transponowanego taką, że~posiada on~identyczne silnie spójne składowe, jak graf
-pierwotny.
+pierwotny. Dodatkowo odwiedzone wierzchołki we~wcześniejszych wywołaniach DFS
+powinny być pomijane. Innymi słowy, używamy tego samego zbioru wierzchołków
+odwiedzonych dla wszystkich wywołań DFS.
+
+\subsection{Z~wielokrotnym DFS}
+\label{sec:multiple-dfs}
+
+Ostatni algorytm opiera się na~wielokrotnym przechodzeniu grafu.
+
+Rozpoczynamy z~listą wierzchołków do~odwiedzenia $toVisit$ oraz pustym zbiorem
+wierzchołków odwiedzonych $visited$. Dopóki lista $toVisit$ nie jest pusta:
+\begin{enumerate}
+\item pobierz pierwszy wierzchołek $v$ z~listy $toVisit$,
+\item dla $v$ wywołaj $DFS$,
+\item\label{item:multiple-dfs:cond} sprawdź, czy wszystkie odwiedzone
+  wierzchołki w~$DFS(v)$ są~w~zbiorze $visited$,
+\begin{enumerate}[label*=\arabic*.]
+\item jeśli tak, to~usuń z~listy $toVisit$ odwiedzone wierzchołki w~$DFS(v)$,
+  a~do~zbioru $visited$ przypisz wierzchołki odwiedzone w~$DFS(v)$,
+\item w~przeciwnym przypadku, graf nie jest częściowo spójny.
+\end{enumerate}
+\end{enumerate}
+
+Intuicja za~punktem~\ref{item:multiple-dfs:cond}, opiera się na~tym,
+że~w~pewnym kroku algorytmu, wszystkie wierzchołki w~zbiorze $visited$ stanowią
+podgraf częściowo spójny. Wykonując więc DFS na~pierwszym wierzchołku $v$
+z~listy $toVisit$, musimy odwiedzić wszystkie wierzchołki z~$visited$. Jeśli
+tak się nie stanie, to~graf okaże się nieczęściowo spójny. Wynika to~z~tego,
+że~skoro $v$ nie jest osiągalny z~żadnego wierzchołka z~$visited$, to~wszystkie
+wierzchołki z~$visited$ muszą być osiągalne przez $v$.
+
+Doprecyzowania wymaga jeszcze kolejność wierzchołków w~liście $toVisit$.
+Mianowicie, należy je~przetwarzać w~kolejności odwrotnej do~posortowania
+topologicznego wierzchołków. Zapobiega to~przypadkom, że~kilka podgrafów, jest
+osiągalnych z~pewnego wierzchołka, mimo że~żadne wierzchołki z~podgrafów nie
+są~wzajemnie osiągalne. Jako przykład można rozważyć graf:
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[main node, on grid] (v1) {$1$};
+    \node[main node, on grid] (v2) [below right = 1.5cm and -2cm of v1] {$2$};
+    \node[main node, on grid] (v3) [below right = 1.5cm and 2cm of v1] {$3$};
+    \path[edge] (v1) edge [->] node {} (v2);
+    \path[edge] (v1) edge [->] node {} (v3);
+  \end{tikzpicture}
+\end{figure}
+
+Rozpoczynając od~$1$, wszystkie wierzchołki zostałyby odwiedzone, mimo że~nie
+istnieje ścieżka $2 \to 3$ lub $3 \to 2$, więc graf zostałby niepoprawnie
+sklasyfikowany jako częściowo spójny.
 
 \section{Struktury danych}
 
