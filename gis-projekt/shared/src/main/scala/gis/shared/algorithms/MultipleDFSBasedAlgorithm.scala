@@ -32,20 +32,20 @@ class MultipleDFSBasedAlgorithm(val graph: Graph) extends GraphConnectivity with
   }
 
   def solve: (List[Vertex], Boolean) = {
-    solve(Set.empty, verticesToVisit)
+    solve(Nil, verticesToVisit)
   }
 
-  private def solve(connected: Set[Vertex], notConnected: List[Vertex]): Solution = {
+  private def solve(connected: List[Vertex], notConnected: List[Vertex]): Solution = {
     notConnected match {
       case firstNotConnected :: restNotConnected =>
         val visited = graph.dfs(firstNotConnected)
-        if (connected subsetOf visited.toSet) {
+        if (connected.toSet subsetOf visited.toSet) {
           val notConnectedAfter = restNotConnected diff visited
-          solve(visited.toSet, notConnectedAfter)
+          solve(visited.toList, notConnectedAfter)
         } else {
-          (visited.toList, false)
+          ((connected ++ visited).distinct, false)
         }
-      case Nil => (connected.toList, true)
+      case Nil => (connected, true)
     }
   }
 }
