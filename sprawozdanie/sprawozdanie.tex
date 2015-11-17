@@ -16,7 +16,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{arrows,positioning,automata}
-\tikzset{>=stealth',shorten >=1pt,auto,thick,main node/.style={circle,fill=blue!30,draw,minimum size=1cm,inner sep=0pt,font=\sffamily\Large\bfseries},wordnet/.style={draw=none,fill=none,inner sep=0pt},edge/.style={thick,double}}
+\tikzset{>=stealth',shorten >=1pt,auto,thick,main node/.style={circle,fill=blue!30,draw,minimum size=0.8cm,inner sep=0pt,font=\sffamily\large\bfseries},edge/.style={thick,double}}
 
 \frenchspacing
 
@@ -104,6 +104,12 @@ osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 Dla każdej pary wierzchołków $(v, u)$ grafu sprawdź, czy można osiągnąć
 wierzchołek $u$ uruchamiając procedurę \emph{DFS} z~$v$ lub odwrotnie.
 
+\subsubsection{Złożoność}
+
+Musimy wykonać $q$ (liczba krawędzi) razy procedurę DFS\@. Złożoność przejścia
+jednego uruchomienia algorytmu DFS to~$O(n + q)$, więc złożoność całego
+algorytmu to~$O(q(n + q))$, gdzie $n$ -- liczba wierzchołków.
+
 \subsection{Bazujący na~silnie spójnych składowych}
 
 Idea kolejnego algorytmu polega na~wyznaczeniu wszystkich silnie spójnych
@@ -145,6 +151,17 @@ transponowanego taką, że~posiada on~identyczne silnie spójne składowe, jak g
 pierwotny. Dodatkowo odwiedzone wierzchołki we~wcześniejszych wywołaniach DFS
 powinny być pomijane. Innymi słowy, używamy tego samego zbioru wierzchołków
 odwiedzonych dla wszystkich wywołań DFS.
+
+\subsubsection{Złożoność}
+
+\begin{enumerate}
+\item Posortowanie topologiczne wierzchołków -- $O(n + q)$.
+\item Dwukrotne przejście grafu procedurą DFS -- $O(n + q)$.
+\item Transpozycja grafu -- $O(n + q)$.
+\item Utworzenie grafu poprzez zastąpienie spójnymi składowymi -- $O(n + q)$.
+\item Uruchomienie algorytmu z~sekcji~\ref{sec:from-definion-alg}
+  lub~\ref{sec:multiple-dfs} na~zminimalizowanym grafie.
+\end{enumerate}
 
 \subsection{Z~wielokrotnym DFS}
 \label{sec:multiple-dfs}
@@ -193,6 +210,16 @@ są~wzajemnie osiągalne. Jako przykład można rozważyć graf:
 Rozpoczynając od~$1$, wszystkie wierzchołki zostałyby odwiedzone, mimo że~nie
 istnieje ścieżka $2 \to 3$ lub $3 \to 2$, więc graf zostałby niepoprawnie
 sklasyfikowany jako częściowo spójny.
+
+\subsubsection{Złożoność}
+
+\begin{enumerate}
+\item Posortowanie topologiczne wierzchołków -- $O(n + q)$.
+\item\label{item:multiple-dfs:dfs-pt-2} Każde wywołanie DFS -- $O(n + q)$.
+  Następnie należy sprawdzić, czy odwiedzone do~tej pory wierzchołki
+  są~podzbiorem odwiedzonych wcześniej -- $O(n \log n)$.
+\item Punkt~\ref{item:multiple-dfs:dfs-pt-2} jest wykonywany od~$1$ do~$n$ razy.
+\end{enumerate}
 
 \section{Struktury danych}
 
