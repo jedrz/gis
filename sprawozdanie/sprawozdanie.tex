@@ -60,9 +60,6 @@ graf skierowany jest częściowo spójny.
 \item[Pętla] krawędź, której końcami jest ten sam wierzchołek.
 \item[Graf częściowo spójny] graf, w~którym między każdą parą wierzchołków
   istnieje ścieżka co~najmniej w~jedną stronę.
-\item[Listy sąsiedztwa] sposób prezentacji grafu, w którym każdy wierzchołek ma
-	przypisaną listę wierzchołków, do których poprowadzona jest krawędź z tego
-	wierzchołka.
 \end{description}
 
 \subsection{Założenia}
@@ -223,7 +220,9 @@ sklasyfikowany jako częściowo spójny.
 
 \section{Struktury danych}
 
-Graf został przedstawiony w naszej aplikacji jako listy sąsiedztwa. Wierzchołki
+Graf został przedstawiony w naszej aplikacji jako listy sąsiedztwa. Jest to sposób
+prezentacji grafu, w którym każdy wierzchołek ma przypisaną listę wierzchołków, do
+których poprowadzona jest krawędź z tego wierzchołka. Wierzchołki
 są oznaczone liczbami całkowitymi. Krawędź przedstawiona została jako para
 wierzchołków. Na potrzeby projektu powstała również lista grafów, która służy do
 przechowywania grafów utworzonych ręcznie na potrzeby testów jednostkowych oraz
@@ -244,6 +243,18 @@ na~losowych grafach. Wytworzony generator posłuży nam także do~generacji
 większych grafów oraz weryfikacji złożoności czasowych algorytmów.
 
 \section{Założenia programu}
+
+Program ma za zadanie obliczać częściową spójność grafów. Zaimplementowane
+zostały trzy algorytmy. Jeden z nich jednak wyznacza jedynie pełną spójność,
+jednak zdecydowaliśmy się go pozostawić w programie. Na potrzeby testów i
+prezentacji zostały zaimplementowane generatory grafów. Dostępne są również
+specjalne przypadki grafów, które stworzyliśmy ręcznie do testów. Interfejs
+użytkownika pozwala na wybranie specjalnego przypadku grafu bądź jego
+wygenerowanie, a
+następnie śledzenie działania algorytmu badającego częściową spójność. Pasek
+postępu poinformuje użytkownika o końcu przetwarzania grafu przez algorytm.
+Jeśli chodzi o parametry generatora grafów, można ustalić maksymalną liczbę
+wierzchołków, jaką będzie posiadał wygenerowany graf.
 
 \end{document}
 
