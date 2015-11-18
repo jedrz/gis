@@ -11,8 +11,7 @@ class KosarajuSCCSpec extends UnitSpec {
       .withEdgeSymetric(3, 4)
       .withEdge(2, 3)
 
-    // Trochę słabo, że wymaga kolejności.
-    graph.findSCC should be (Stream(Stream(4, 3), Stream(2, 1)))
+    graph.findSCC.map(s => s.toList.sorted) should contain allOf (List(3, 4), List(1, 2))
   }
 
 }
