@@ -4,6 +4,10 @@ import org.scalacheck.Gen
 
 object Generators {
 
+  val predefinedPartiallyConnected: Gen[Graph] = {
+    Gen.oneOf(Graphs.partiallyConnectedGraphs)
+  }
+
   val empty: Gen[Graph] = {
     val sizeGen = Gen.choose(2, 4)
     sizeGen.map(size =>
@@ -59,10 +63,15 @@ object Generators {
 
   def partiallyConnected: Gen[Graph] = {
     Gen.lzy(Gen.oneOf(
+      predefinedPartiallyConnected,
       complete,
       twoCompleteJoinedWithDirectedEdge,
       partiallyConnectedAndCompleteJoinedWithUndirectedEdge
     ))
+  }
+
+  val predefinedNotPartiallyConnected: Gen[Graph] = {
+    Gen.oneOf(Graphs.notPartiallyConnectedGraphs)
   }
 
   // g1 --> v <-- g2
@@ -82,7 +91,11 @@ object Generators {
   }
 
   val notPartiallyConnected: Gen[Graph] = {
-    Gen.oneOf(empty, partiallyConnectedJoinedWithVertex)
+    Gen.oneOf(
+      predefinedNotPartiallyConnected,
+      empty,
+      partiallyConnectedJoinedWithVertex
+    )
   }
 
   private def add(g1: Graph, g2: Graph): Graph = {
