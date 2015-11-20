@@ -2,6 +2,7 @@ package gis.jvm
 
 import gis.shared.Graphs
 import gis.shared.algorithms.{MultipleDFSBasedAlgorithm, SCCBasedAlgorithm, SimpleAlgorithm}
+import org.scalameter.api._
 
 object PerformanceTests extends Bench.LocalTime {
 
