@@ -1,7 +1,7 @@
 package gis.shared
 
 import gis.shared.DFSForest.toDFSForest
-import gis.shared.Forest.postOrder
+import gis.shared.Forest.{postOrder, topologicalSort}
 
 class DFSForestSpec extends UnitSpec {
 
@@ -43,12 +43,18 @@ class DFSForestSpec extends UnitSpec {
     forest should have size 1
   }
 
-  "Forest" should "return vertices in post-order" in {
+  // 1 -> 2 -> 4
+  //      |
+  //      \/
+  //   -> 3
+
+  "Forest" should "return vertices in post-order and topologically sorted" in {
     val graph = Graphs.initGraphWithVertices(1 to 4).withEdge(1, 2).withEdge(1, 3).withEdge(2, 3).withEdge(2, 4)
 
     val forest = graph.dfsForest
 
     postOrder(forest) should contain inOrder(3, 4, 2, 1)
+    topologicalSort(forest) should contain inOrder(1, 2, 4, 3)
   }
 
 }
