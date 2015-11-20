@@ -20,7 +20,19 @@ object Graphs {
       disconnectedGraph,
       secondDisconnectedGraph,
       // 2 <- 1 -> 3
-      initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(1, 3)
+      initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(1, 3),
+      // Hard, generated graph. 9 and 10 are tricky because of no out edges.
+      new Graph(Map(
+        5 -> List(6, 8),
+        10 -> List(),
+        1 -> List(10, 2),
+        6 -> List(7),
+        9 -> List(),
+        2 -> List(3, 1),
+        7 -> List(5),
+        3 -> List(4, 5),
+        8 -> List(10, 9),
+        4 -> List(3, 5)))
     )
   }
 
