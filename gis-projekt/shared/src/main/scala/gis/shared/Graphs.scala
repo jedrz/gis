@@ -10,8 +10,8 @@ object Graphs {
         .withEdge(1, 2).withEdge(2, 1)
         .withEdge(3, 4).withEdge(4, 3)
         .withEdge(2, 3),
-      // 0 -> 1 -> 2 -> 0, 0 -> 3 -> 4
-      initGraphWithVertices(1 to 4).withEdge(0, 1).withEdge(1, 2).withEdge(2, 0).withEdge(0, 3).withEdge(3, 4)
+      // 1 -> 2 -> 3 -> 1, 1 -> 4 -> 5
+      initGraphWithVertices(1 to 5).withEdge(1, 2).withEdge(2, 3).withEdge(3, 1).withEdge(1, 4).withEdge(4, 5)
     )
   }
 
