@@ -8,28 +8,14 @@ object Generators {
     Gen.oneOf(Graphs.partiallyConnectedGraphs)
   }
 
+  private val sizeGen = Gen.choose(2, 4)
+
   val empty: Gen[Graph] = {
-    val sizeGen = Gen.choose(2, 4)
-    sizeGen.map(size =>
-      (1 to size).foldLeft(new Graph())(
-        (graph, _) => graph.newVertex._1
-      )
-    )
+    sizeGen.map(Graphs.empty)
   }
 
   val complete: Gen[Graph] = {
-    empty.map(emptyGraph => {
-      val verticesList = emptyGraph.vertices
-      val edgesList = for {
-        from <- verticesList
-        to <- verticesList
-        if from != to
-      } yield (from, to)
-      edgesList.foldLeft(emptyGraph) {
-        case (graph, (from, to)) =>
-          graph.withEdge(from, to)
-      }
-    })
+    sizeGen.map(Graphs.complete)
   }
 
   // Kn --> Km

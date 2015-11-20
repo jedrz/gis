@@ -76,4 +76,23 @@ object Graphs {
   def initGraphWithVertices(seq: Seq[Vertex]): Graph = {
     seq.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
   }
+
+  def empty(size: Int): Graph = {
+    (1 to size).foldLeft(new Graph())(
+      (graph, _) => graph.newVertex._1)
+  }
+
+  def complete(size: Int): Graph = {
+    val emptyGraph = empty(size)
+    val verticesList = emptyGraph.vertices
+    val edgesList = for {
+      from <- verticesList
+      to <- verticesList
+      if from != to
+    } yield (from, to)
+    edgesList.foldLeft(emptyGraph) {
+      case (graph, (from, to)) =>
+        graph.withEdge(from, to)
+    }
+  }
 }
