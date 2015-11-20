@@ -48,11 +48,11 @@ object Generators {
   }
 
   def partiallyConnected: Gen[Graph] = {
-    Gen.lzy(Gen.oneOf(
-      predefinedPartiallyConnected,
-      complete,
-      twoCompleteJoinedWithDirectedEdge,
-      partiallyConnectedAndCompleteJoinedWithUndirectedEdge
+    Gen.lzy(Gen.frequency(
+      (1, predefinedPartiallyConnected),
+      (1, complete),
+      (1, twoCompleteJoinedWithDirectedEdge),
+      (10, partiallyConnectedAndCompleteJoinedWithUndirectedEdge)
     ))
   }
 
