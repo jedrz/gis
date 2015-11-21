@@ -11,7 +11,10 @@ class KosarajuSCCSpec extends UnitSpec {
       .withEdgeSymetric(3, 4)
       .withEdge(2, 3)
 
-    graph.findSCC.map(s => s.toList.sorted) should contain allOf (List(3, 4), List(1, 2))
+    val scc = graph.findSCC
+
+    val sccNormalized = scc.map(s => s.toList.sorted)
+    sccNormalized should contain allOf (List(3, 4), List(1, 2))
   }
 
 }

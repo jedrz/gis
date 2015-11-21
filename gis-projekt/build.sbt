@@ -18,9 +18,6 @@ lazy val gis = crossProject.in(file(".")).
     libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
     libraryDependencies += "com.github.monkeysintown" % "jgraphx" % "3.3.1.1",
     libraryDependencies += "com.intellij" % "forms_rt" % "7.0.3"
-
-
-
 ).
   jsSettings(
   )
