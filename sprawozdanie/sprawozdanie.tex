@@ -312,6 +312,95 @@ postępu poinformuje użytkownika o końcu przetwarzania grafu przez algorytm.
 Jeśli chodzi o parametry generatora grafów, można ustalić maksymalną liczbę
 wierzchołków, jaką będzie posiadał wygenerowany graf.
 
+\section{Wyniki poprawności algorytmów}
+
+Poprawność algorytmów, tak jak opisaliśmy w~sprawozdaniu 2, sprawdziliśmy
+na~własnych grafach, które są~częściowo spójne jak i~nie. Dodatkowo
+stworzyliśmy generatory obu typów grafów, na~których wyjściach sprawdzaliśmy
+poprawność algorytmów.
+
+Jak się okazało, podczas testów na~wygenerowanych grafach, algorytm bazujący
+na~wielokrotnym algorytmie DFS dał błędny wynik. Powodem błędnego wyniku
+okazała się kolejność, w~której były odwiedzane wierzchołki. Użyta przez nas
+kolejność wg~sortowania topologicznego wierzchołków, okazała się
+niewystarczająca.
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.6\textwidth]{generated-tricky-graph.jpg}
+\caption{Wygenerowany graf nieczęściowo spójny dla którego algorytm
+  z~wielokrotnym DFS zwraca błędny wynik}
+\label{fig:tricky-graph}
+\end{figure}
+
+Rysunek~\ref{fig:tricky-graph} przedstawia wygenerowany graf. Kolejność
+posortowania wierzchołków, która została użyta w~algorytmie to:
+$7, 6, 10, 9, 8, 5, 4, 3, 2, 1$. Rozpoczynając z~wierzchołka $7$ algorytm DFS
+odwiedza wierzchołki $8$ oraz $9$, dlatego wchodzą one niesłusznie w~skład
+podgrafu cześciowo spójnego. Gdyby kolejność wierzchołków była następująca
+(również odwrotna do~posortowania topologicznego)
+$10, 9, 8, 7, 6, 5, 4, 3, 2, 1$, wtedy algorytm zwróciłby poprawny wynik, gdyż
+z~drugiego odwiedzonego wierzchołka ($9$), wierzchołek $10$ nie zostałby
+osiągnięty.
+
+\section{Czas wykonania}
+
+Testy wydajnościowe algorytmów przeprowadziliśmy na~grafach pełnych oraz pewnym
+losowo wygenerowanym grafie częściowo spójnym. Umieszczone czasy wykonania
+w~tabelkach są~minimalnymi z~5 uruchomień algorytmów dla testowego grafu.
+W~kolumnach po~liczbie wierzchołków (krawędzi) oraz czasach wykonania
+algorytmów, podane są~zmiany wartości w~stosunku do~poprzedniego wiersza.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ r r r r r r }
+    \multicolumn{2}{c}{$n$ ($q$)} & \multicolumn{2}{c}{Wielokrotny DFS [$ms$]} & \multicolumn{2}{c}{SSS [$ms$]} \\
+    \hline
+    50 (1225) & 1 & 6,266382 & 1 & 11,755333 & 1 \\
+    100 (4950) & 4 & 44,818867 & 7,15 & 84,162854 & 7,15 \\
+    150 (11175) & 2,24 & 151,670063 & 3,38 & 280,121112 & 3,33 \\
+    200 (19900) & 1,77 & 361,261148 & 2,38 & 718,690892 & 2,56 \\
+    250 (31125) & 1,56 & 712,788966 & 1,97 & 1436,837296 & 1,99 \\
+    300 (44850) & 1,43 & 1236,344434 & 1,74 & 2492,040605 & 1,73 \\
+  \end{tabular}
+  \caption{Wyniki dla grafu pełnego}
+\end{table}
+
+Powyższa tabela pokazuje, że~algorytm oparty na~wielokrotnym przeszukiwaniu
+w~głąb jest ok.~dwukrotnie szybszy od~algorytmu opartego na~wyznaczaniu silnie
+spójnych składowych.
+
+Spoglądając na~zmianę rozmiaru grafu widać, że~żaden z~dwóch algorytmów, nie
+posiada złożoności liniowej (zwiększenie rozmiaru danych, nie zwiększa o~tyle
+samo czasu wykonania algorytmu), a~bardziej
+liniowo-loga\dywiz{}ryt\dywiz{}miczną. Nie jest to~też jednak złożoność
+kwadratowa.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ r r }
+    $n$ ($q$) & Z~definicji [$ms$] \\
+    \hline
+    10 (45) & 0,986566 \\
+    20 (190) & 24,886044 \\
+    30 (435) & 183,095301 \\
+    40 (780) & 755,686719 \\
+    50 (1225) & 2282,542542 \\
+  \end{tabular}
+  \caption{Wyniki dla grafu pełnego}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{ r r }
+    Wielokrotny DFS [$ms$] & SSS [$ms$] \\
+    \hline
+    228,671376 & 342,458718 \\
+  \end{tabular}
+  \caption{Wyniki dla wygenerowanego grafu częściowo spójnego
+    o~2102 wierzchołkach oraz 6107 krawędziach}
+\end{table}
+
 \section{Wnioski}
 
 Podczas planowania oraz implementacji projektu doszliśmy do następujących
