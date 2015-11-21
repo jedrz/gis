@@ -10,8 +10,8 @@ object Graphs {
         .withEdge(1, 2).withEdge(2, 1)
         .withEdge(3, 4).withEdge(4, 3)
         .withEdge(2, 3),
-      // 0 -> 1 -> 2 -> 0, 0 -> 3 -> 4
-      initGraphWithVertices(1 to 4).withEdge(0, 1).withEdge(1, 2).withEdge(2, 0).withEdge(0, 3).withEdge(3, 4)
+      // 1 -> 2 -> 3 -> 1, 1 -> 4 -> 5
+      initGraphWithVertices(1 to 5).withEdge(1, 2).withEdge(2, 3).withEdge(3, 1).withEdge(1, 4).withEdge(4, 5)
     )
   }
 
@@ -20,7 +20,19 @@ object Graphs {
       disconnectedGraph,
       secondDisconnectedGraph,
       // 2 <- 1 -> 3
-      initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(1, 3)
+      initGraphWithVertices(1 to 3).withEdge(1, 2).withEdge(1, 3),
+      // Hard, generated graph. 9 and 10 are tricky because of no out edges.
+      new Graph(Map(
+        5 -> List(6, 8),
+        10 -> List(),
+        1 -> List(10, 2),
+        6 -> List(7),
+        9 -> List(),
+        2 -> List(3, 1),
+        7 -> List(5),
+        3 -> List(4, 5),
+        8 -> List(10, 9),
+        4 -> List(3, 5)))
     )
   }
 
@@ -63,5 +75,24 @@ object Graphs {
 
   def initGraphWithVertices(seq: Seq[Vertex]): Graph = {
     seq.foldLeft(new Graph)((graph, v) => graph.withVertex(v))
+  }
+
+  def empty(size: Int): Graph = {
+    (1 to size).foldLeft(new Graph())(
+      (graph, _) => graph.newVertex._1)
+  }
+
+  def complete(size: Int): Graph = {
+    val emptyGraph = empty(size)
+    val verticesList = emptyGraph.vertices
+    val edgesList = for {
+      from <- verticesList
+      to <- verticesList
+      if from != to
+    } yield (from, to)
+    edgesList.foldLeft(emptyGraph) {
+      case (graph, (from, to)) =>
+        graph.withEdge(from, to)
+    }
   }
 }

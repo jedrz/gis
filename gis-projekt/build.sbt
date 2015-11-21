@@ -16,7 +16,10 @@ lazy val gis = crossProject.in(file(".")).
   ).
   jvmSettings(
     libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
-    libraryDependencies += "com.github.monkeysintown" % "jgraphx" % "3.3.1.1"
+    libraryDependencies += "com.github.monkeysintown" % "jgraphx" % "3.3.1.1",
+    libraryDependencies += "com.storm-enroute" %% "scalameter" % "0.7",
+    testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework"),
+    parallelExecution in Test := false
   ).
   jsSettings(
   )

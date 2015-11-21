@@ -1,16 +1,30 @@
 package gis.shared
 
 case class Node(vertex: Vertex, subtrees: Stream[Node]) {
+
   def postOrder: Stream[Vertex] = {
     subtrees.flatMap(_.postOrder) #::: Stream(vertex)
   }
+
+  def topologicalSort: Stream[Vertex] = {
+    postOrder.reverse
+  }
+
 }
 
 // Please, don't kill me
 object Forest {
+
   implicit def postOrder(forest: Stream[Node]): Stream[Vertex] = {
     forest.flatMap(_.postOrder)
   }
+
+  // It's different than pre-order
+  // https://en.wikipedia.org/wiki/Depth-first_search#Output_of_a_depth-first_search
+  implicit def topologicalSort(forest: Stream[Node]): Stream[Vertex] = {
+    postOrder(forest).reverse
+  }
+
 }
 
 // http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.52.7441&rep=rep1&type=pdf
