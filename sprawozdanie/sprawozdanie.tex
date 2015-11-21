@@ -312,6 +312,35 @@ postępu poinformuje użytkownika o końcu przetwarzania grafu przez algorytm.
 Jeśli chodzi o parametry generatora grafów, można ustalić maksymalną liczbę
 wierzchołków, jaką będzie posiadał wygenerowany graf.
 
+\section{Wnioski}
+
+Podczas planowania oraz implementacji projektu doszliśmy do następujących
+wniosków:
+
+\begin{itemize}
+	\item Należy dobrze przemyśleć projekt grafów, które będą używane do testów.
+		Wielokrotnie zdarzało się tak, że byliśmy niemal pewni poprawności
+		algorytmu, jednak w późniejsze fazie projektu nagle okazywało się, że
+		nie jest on poprawny.
+	\item Warto stworzyć lub skorzystać z generatora grafów, którego losowość
+		pozwoli na wykrycie problemów, które nie były wzięte pod uwagę podczas
+		projektu testów.
+	\item Dla problemu częściowej spójności grafu bardzo trudno stworzyć dobrej
+		jakości testy wydajnościowe. Problemem jest stworzenie dowolnie dużych
+		grafów częściowo spójnych w taki sposób, żeby wymagały one wykonania
+		maksymalnej liczby kroków algorytmów.
+	\item Ciężko jest przedstawić działanie algorytmów w interfejsie
+		użytkownika, ponieważ każdy z wierzchołków może być odwiedzony
+		kilkukrotnie.
+	\item Język Scala był dobrym wyborem, pisało się nam w nim bardzo
+		przyjemnie. Pozwala również na używanie bibliotek języka Java co było
+		pomocne podczas implementacji interfejsu użytkownika.
+	\item Użyta przez nas biblioteka JGraphX pozwala na w miarę prostą
+		wizualizację grafów, jednak według nas zasługuje na ponowne przepisanie.
+		Używa ona przestarzałej, mało czytelniej składni języka (np.: brak typów
+		generycznych).
+\end{itemize}
+
 \end{document}
 %%% Local Variables:
 %%% mode: latex
