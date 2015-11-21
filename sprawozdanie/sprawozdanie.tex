@@ -220,21 +220,22 @@ sklasyfikowany jako częściowo spójny.
 
 \section{Struktury danych}
 
-Graf został przedstawiony w naszej aplikacji jako listy sąsiedztwa. Jest to sposób
-prezentacji grafu, w którym każdy wierzchołek ma przypisaną listę wierzchołków, do
-których poprowadzona jest krawędź z tego wierzchołka. Wierzchołki
-są oznaczone liczbami całkowitymi. Krawędź przedstawiona została jako para
-wierzchołków. Na potrzeby projektu powstała również lista grafów, która służy do
-przechowywania grafów utworzonych ręcznie na potrzeby testów jednostkowych oraz
-prezentacji możliwości algorytmu w interfejsie użytkownika. Dostępne są również
-lista przechowująca wszystkie wierzchołki grafu i analogiczna lista
-przechowująca krawędzie. Wynik algorytmu przechowywany jest wraz z grafem w
-osobnej strukturze co ma na celu uproszczenie implementacji interfejsu
-użytkownika. Najciekawszą strukturą w naszym projekcie jest las. Używamy jej do
-przechowywania przejść algorytmu DFS w naszych algorytmach. Jest to lista drzew,
-gdzie każde drzewo jest jednym przejściem algorytmu DFS. Poniżej przykład
-grafu i odpowiedniego mu drzewa (przy założeniu, że zaczynamy od wierzchołka nr
-1):
+Graf został przedstawiony w naszej aplikacji jako \textbf{listy sąsiedztwa}.
+Jest to sposób prezentacji grafu, w którym każdy wierzchołek ma przypisaną
+listę wierzchołków, do których poprowadzona jest krawędź z tego wierzchołka.
+\textbf{Wierzchołki} są oznaczone liczbami całkowitymi. \textbf{Krawędź}
+przedstawiona została jako para wierzchołków.
+
+Dostępne są również lista przechowująca wszystkie wierzchołki grafu i
+analogiczna lista przechowująca krawędzie. Wynik algorytmu przechowywany jest
+wraz z grafem w osobnej strukturze co ma na celu uproszczenie implementacji
+interfejsu użytkownika.
+
+Najciekawszą strukturą w naszym projekcie jest \textbf{las}. Używamy jej do
+przechowywania przejść algorytmu DFS w naszych algorytmach. Jest to lista
+drzew, gdzie każde drzewo jest jednym przejściem algorytmu DFS. Poniżej
+przykład grafu i odpowiedniego mu drzewa (przy założeniu, że zaczynamy od
+wierzchołka nr 1):
 
 \begin{figure}[H]
   \centering
@@ -247,17 +248,21 @@ grafu i odpowiedniego mu drzewa (przy założeniu, że zaczynamy od wierzchołka
     \path[edge] (v1) edge [->] node {} (v3);
     \path[edge] (v2) edge [->] node {} (v3);
     \path[edge] (v2) edge [->] node {} (v4);
-    
+
 	\node[main node, on grid] (x1) [right = 7cm of v1] {$1$};
     \node[main node, on grid] (x2) [below = 2cm of x1] {$2$};
     \node[main node, on grid] (x3) [below left = 1.5cm and 2cm of x2] {$3$};
     \node[main node, on grid] (x4) [below right = 1.5cm and 2cm of x2] {$4$};
-    
+
 	\path[edge] (x1) edge [->] node {} (x2);
     \path[edge] (x2) edge [->] node {} (x3);
     \path[edge] (x2) edge [->] node {} (x4);
   \end{tikzpicture}
 \end{figure}
+
+Na potrzeby projektu powstała również lista grafów, która służy do
+przechowywania grafów utworzonych ręcznie na potrzeby testów jednostkowych oraz
+prezentacji możliwości algorytmu w interfejsie użytkownika.
 
 \section{Projekt testów}
 
@@ -273,8 +278,8 @@ większych grafów oraz weryfikacji złożoności czasowych algorytmów.
 
 Program ma za zadanie obliczać częściową spójność grafów. Zaimplementowane
 zostaną 2 algorytmy. Na potrzeby testów i
-prezentacji zostaną zaimplementowane generatory grafów.Interfejs pozwoli na
-wybór grafu a
+prezentacji zostaną zaimplementowane generatory grafów. Interfejs pozwoli na
+wybór grafu, a
 następnie śledzenie działania algorytmu badającego częściową spójność.
 Jeśli chodzi o parametry generatora grafów, będzie można ustalić maksymalną liczbę
 wierzchołków, jaką będzie posiadał wygenerowany graf.
