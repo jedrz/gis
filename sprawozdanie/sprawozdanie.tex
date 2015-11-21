@@ -230,7 +230,34 @@ prezentacji możliwości algorytmu w interfejsie użytkownika. Dostępne są ró
 lista przechowująca wszystkie wierzchołki grafu i analogiczna lista
 przechowująca krawędzie. Wynik algorytmu przechowywany jest wraz z grafem w
 osobnej strukturze co ma na celu uproszczenie implementacji interfejsu
-użytkownika.
+użytkownika. Najciekawszą strukturą w naszym projekcie jest las. Używamy jej do
+przechowywania przejść algorytmu DFS w naszych algorytmach. Jest to lista drzew,
+gdzie każde drzewo jest jednym przejściem algorytmu DFS. Poniżej przykład
+grafu i odpowiedniego mu drzewa (przy założeniu, że zaczynamy od wierzchołka nr
+1):
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[main node, on grid] (v1) {$1$};
+    \node[main node, on grid] (v2) [below right = 1.5cm and -2cm of v1] {$2$};
+    \node[main node, on grid] (v3) [below right = 1.5cm and 2cm of v1] {$3$};
+    \node[main node, on grid] (v4) [below = 3cm of v1] {$4$};
+    \path[edge] (v1) edge [->] node {} (v2);
+    \path[edge] (v1) edge [->] node {} (v3);
+    \path[edge] (v2) edge [->] node {} (v3);
+    \path[edge] (v2) edge [->] node {} (v4);
+    
+	\node[main node, on grid] (x1) [right = 7cm of v1] {$1$};
+    \node[main node, on grid] (x2) [below = 2cm of x1] {$2$};
+    \node[main node, on grid] (x3) [below left = 1.5cm and 2cm of x2] {$3$};
+    \node[main node, on grid] (x4) [below right = 1.5cm and 2cm of x2] {$4$};
+    
+	\path[edge] (x1) edge [->] node {} (x2);
+    \path[edge] (x2) edge [->] node {} (x3);
+    \path[edge] (x2) edge [->] node {} (x4);
+  \end{tikzpicture}
+\end{figure}
 
 \section{Projekt testów}
 
@@ -261,10 +288,11 @@ Przykładowo taki algorytm może znaleźć zastosowanie podczas badań słów i
 zależności między nimi. W tym wypadku pozytywny wynik algorytmu oznaczałby, ze
 wszystkie słowa z badanej grupy są powiązane badanymi relacjami.
 
-Kolejnym przykładem użycia algorytmu może być sieć komputerowa czy też, w której zdarzają się kanały
+Kolejnym przykładem użycia algorytmu może być sieć komputerowa, w której zdarzają się kanały
 komunikacyjne, w których dane przesyłane mogą być tylko w jedną stronę. Wtedy po
 zaprojektowaniu takiej sieci można by użyć tego algorytmu by sprawdzić, czy
-każdy komputer w sieci jest w jakiś sposób osiągalny dla innych komputerów.
+istnieje komunikacja w którąkolwiek ze stron między wszystkimi komputerami w
+sieci.
 
 \newpage
 
