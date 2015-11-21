@@ -2,7 +2,7 @@ package gis.jvm
 
 import gis.shared.algorithms.{MultipleDFSBasedAlgorithm, SCCBasedAlgorithm, SimpleAlgorithm}
 import gis.shared.{Generators, Graph, Graphs}
-import org.scalameter.api.{Bench, Context, _}
+import org.scalameter.api._
 import org.scalameter.picklers.noPickler._
 import org.scalameter.{CurveData, Persistor}
 
