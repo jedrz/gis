@@ -3,7 +3,7 @@ package gis.jvm;
 import gis.shared.Generators;
 import gis.shared.Graph;
 import gis.shared.Graphs;
-import gis.shared.algorithms.MultipleDFSBasedAlgorithm;
+import gis.shared.algorithms.SimpleAlgorithm;
 import org.scalacheck.Gen;
 import scala.Tuple2;
 import scala.collection.immutable.List;
@@ -139,7 +139,7 @@ public class View extends JFrame {
     private void generateGraph(int verticesNum, GraphType graphType) {
         Graph graph = getGeneratedGraph(verticesNum, graphType);
         graphVisualization = new GraphVisualization(graphPanel);
-        Tuple2<List<Object>, Object> solution = new MultipleDFSBasedAlgorithm(graph).solve();
+        Tuple2<List<Object>, Object> solution = new SimpleAlgorithm(graph).solve();
         algorithmProgressBar.setValue(0);
         algorithmProgressBar.setMaximum(solution._1().size());
         graphVisualization.visualize(solution, graph);
@@ -184,7 +184,7 @@ public class View extends JFrame {
         graphVisualization = new GraphVisualization(graphPanel);
         String selectedItem = (String) comboBox.getSelectedItem();
         Graph selectedGraph = graphMap.get(selectedItem);
-        Tuple2<List<Object>, Object> solution = new MultipleDFSBasedAlgorithm(selectedGraph).solve();
+        Tuple2<List<Object>, Object> solution = new SimpleAlgorithm(selectedGraph).solve();
         algorithmProgressBar.setValue(0);
         algorithmProgressBar.setMaximum(solution._1().size());
         graphVisualization.visualize(solution, selectedGraph);
