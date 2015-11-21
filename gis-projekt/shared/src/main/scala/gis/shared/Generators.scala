@@ -34,9 +34,9 @@ object Generators {
   }
 
   // PC <--> C
-  val partiallyConnectedAndCompleteJoinedWithUndirectedEdge: Gen[Graph] = {
+  def partiallyConnectedAndCompleteJoinedWithUndirectedEdge(mutuallyRecursiveFreq: Int): Gen[Graph] = {
     for {
-      pc <- partiallyConnected
+      pc <- partiallyConnectedFactory(mutuallyRecursiveFreq)
       c <- complete
       pCVertex <- Gen.oneOf(pc.vertices)
       cVertex <- Gen.oneOf(c.vertices)
@@ -47,14 +47,16 @@ object Generators {
     }
   }
 
-  def partiallyConnected: Gen[Graph] = {
+  def partiallyConnectedFactory(mutuallyRecursiveFreq: Int = 10): Gen[Graph] = {
     Gen.lzy(Gen.frequency(
       (1, predefinedPartiallyConnected),
       (1, complete),
       (1, twoCompleteJoinedWithDirectedEdge),
-      (10, partiallyConnectedAndCompleteJoinedWithUndirectedEdge)
+      (mutuallyRecursiveFreq, partiallyConnectedAndCompleteJoinedWithUndirectedEdge(mutuallyRecursiveFreq))
     ))
   }
+
+  val partiallyConnected = partiallyConnectedFactory()
 
   val predefinedNotPartiallyConnected: Gen[Graph] = {
     Gen.oneOf(Graphs.notPartiallyConnectedGraphs)
