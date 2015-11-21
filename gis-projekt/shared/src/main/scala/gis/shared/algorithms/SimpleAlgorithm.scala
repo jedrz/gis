@@ -30,14 +30,23 @@ class SimpleAlgorithm(val graph: Graph) extends GraphConnectivity {
     var verticesList: List[Vertex] = List.empty
     val pairs = allVertexPairCombinations
     val result = pairs forall { case (from, to) =>
-      val dfsFrom = graph.dfs(from)
+      val dfsFromFull = graph.dfs(from)
+      val dfsFrom = dfsFromFull.takeWhile(_ != to)
       verticesList = verticesList ++ dfsFrom
-      if (!dfsFrom.contains(to)) {
-        val dfsTo = graph.dfs(to)
+      if (!dfsFromFull.contains(to)) {
+        val dfsToFull = graph.dfs(to)
+        val dfsTo = dfsToFull.takeWhile(_ != from) ++ List(from)
         verticesList = verticesList ++ dfsTo
-        dfsTo.contains(from)
+        if (dfsToFull.contains(from)) {
+          verticesList = verticesList ++ List(from)
+          true
+        }
+        else {
+          false
+        }
       }
       else {
+        verticesList = verticesList ++ List(to)
         true
       }
     }

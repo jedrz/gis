@@ -60,9 +60,10 @@ class GraphVisualization(newJPanel: JPanel) {
     solution._1 match {
       case nextVertex :: vertices =>
         val visualizedVertex = vertexMap(nextVertex)
-        visualizedVertex.setValue(visualizedVertex.getValue + "/" + stepNo)
+        visualizedVertex.setValue(visualizedVertex.getId + "/" + stepNo)
         stepNo += 1
         graphView.setCellStyle("VISITED", Array(visualizedVertex))
+        graphView.refresh()
         solution = (vertices, solution._2)
         true
       case Nil => false
