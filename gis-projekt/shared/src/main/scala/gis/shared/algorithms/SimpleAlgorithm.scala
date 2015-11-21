@@ -13,7 +13,7 @@ class SimpleAlgorithm(val graph: Graph) extends GraphConnectivity {
   override def isPartiallyConnected: Boolean = {
     val pairs = allVertexPairCombinations
     pairs forall { case (from, to) =>
-        graph.dfs(from).contains(to) || graph.dfs(to).contains(from)
+      graph.dfs(from).contains(to) || graph.dfs(to).contains(from)
     }
   }
 

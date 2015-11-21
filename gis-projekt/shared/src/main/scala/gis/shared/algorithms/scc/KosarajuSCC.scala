@@ -1,7 +1,7 @@
 package gis.shared.algorithms.scc
 
 import gis.shared.DFSForest.toDFSForest
-import gis.shared.Forest.postOrder
+import gis.shared.Forest.topologicalSort
 import gis.shared.{Graph, SCC, Vertex}
 
 // http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/GraphAlgor/strongComponent.htm
@@ -9,7 +9,7 @@ import gis.shared.{Graph, SCC, Vertex}
 class KosarajuSCC(val graph: Graph) {
 
   def findSCC: SCC = {
-    val sccVertices = postOrder(graph.dfsForest).reverse
+    val sccVertices = topologicalSort(graph.dfsForest)
     val transposed = graph.transpose
     val initialVisited = Set.empty[Vertex]
     val initialScc: SCC = Stream.empty

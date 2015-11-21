@@ -4,28 +4,18 @@ import org.scalacheck.Gen
 
 object Generators {
 
+  val predefinedPartiallyConnected: Gen[Graph] = {
+    Gen.oneOf(Graphs.partiallyConnectedGraphs)
+  }
+
+  private val sizeGen = Gen.choose(2, 4)
+
   val empty: Gen[Graph] = {
-    val sizeGen = Gen.choose(2, 4)
-    sizeGen.map(size =>
-      (1 to size).foldLeft(new Graph())(
-        (graph, _) => graph.newVertex._1
-      )
-    )
+    sizeGen.map(Graphs.empty)
   }
 
   val complete: Gen[Graph] = {
-    empty.map(emptyGraph => {
-      val verticesList = emptyGraph.vertices
-      val edgesList = for {
-        from <- verticesList
-        to <- verticesList
-        if from != to
-      } yield (from, to)
-      edgesList.foldLeft(emptyGraph) {
-        case (graph, (from, to)) =>
-          graph.withEdge(from, to)
-      }
-    })
+    sizeGen.map(Graphs.complete)
   }
 
   // Kn --> Km
@@ -44,9 +34,9 @@ object Generators {
   }
 
   // PC <--> C
-  val partiallyConnectedAndCompleteJoinedWithUndirectedEdge: Gen[Graph] = {
+  def partiallyConnectedAndCompleteJoinedWithUndirectedEdge(mutuallyRecursiveFreq: Int): Gen[Graph] = {
     for {
-      pc <- partiallyConnected
+      pc <- partiallyConnectedFactory(mutuallyRecursiveFreq)
       c <- complete
       pCVertex <- Gen.oneOf(pc.vertices)
       cVertex <- Gen.oneOf(c.vertices)
@@ -57,12 +47,19 @@ object Generators {
     }
   }
 
-  def partiallyConnected: Gen[Graph] = {
-    Gen.lzy(Gen.oneOf(
-      complete,
-      twoCompleteJoinedWithDirectedEdge,
-      partiallyConnectedAndCompleteJoinedWithUndirectedEdge
+  def partiallyConnectedFactory(mutuallyRecursiveFreq: Int = 10): Gen[Graph] = {
+    Gen.lzy(Gen.frequency(
+      (1, predefinedPartiallyConnected),
+      (1, complete),
+      (1, twoCompleteJoinedWithDirectedEdge),
+      (mutuallyRecursiveFreq, partiallyConnectedAndCompleteJoinedWithUndirectedEdge(mutuallyRecursiveFreq))
     ))
+  }
+
+  val partiallyConnected = partiallyConnectedFactory()
+
+  val predefinedNotPartiallyConnected: Gen[Graph] = {
+    Gen.oneOf(Graphs.notPartiallyConnectedGraphs)
   }
 
   // g1 --> v <-- g2
@@ -82,7 +79,11 @@ object Generators {
   }
 
   val notPartiallyConnected: Gen[Graph] = {
-    Gen.oneOf(empty, partiallyConnectedJoinedWithVertex)
+    Gen.oneOf(
+      predefinedNotPartiallyConnected,
+      empty,
+      partiallyConnectedJoinedWithVertex
+    )
   }
 
   private def add(g1: Graph, g2: Graph): Graph = {
