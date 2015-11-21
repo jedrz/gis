@@ -220,22 +220,22 @@ sklasyfikowany jako częściowo spójny.
 
 \section{Struktury danych}
 
-Graf został przedstawiony w naszej aplikacji jako \textbf{listy sąsiedztwa}.
-Jest to sposób prezentacji grafu, w którym każdy wierzchołek ma przypisaną
-listę wierzchołków, do których poprowadzona jest krawędź z tego wierzchołka.
-\textbf{Wierzchołki} są oznaczone liczbami całkowitymi. \textbf{Krawędź}
+Graf został przedstawiony w~naszej aplikacji jako \textbf{listy sąsiedztwa}.
+Jest to~sposób prezentacji grafu, w~którym każdy wierzchołek ma~przypisaną
+listę wierzchołków, do~których poprowadzona jest krawędź z~tego wierzchołka.
+\textbf{Wierzchołki} są~oznaczone liczbami całkowitymi. \textbf{Krawędź}
 przedstawiona została jako para wierzchołków.
 
-Dostępne są również lista przechowująca wszystkie wierzchołki grafu i
-analogiczna lista przechowująca krawędzie. Wynik algorytmu przechowywany jest
-wraz z grafem w osobnej strukturze co ma na celu uproszczenie implementacji
+Dostępne są~również lista przechowująca wszystkie wierzchołki grafu
+i~analogiczna lista przechowująca krawędzie. Wynik algorytmu przechowywany jest
+wraz z~grafem w~osobnej strukturze co~ma~na~celu uproszczenie implementacji
 interfejsu użytkownika.
 
-Najciekawszą strukturą w naszym projekcie jest \textbf{las}. Używamy jej do
-przechowywania przejść algorytmu DFS w naszych algorytmach. Jest to lista
+Najciekawszą strukturą w~naszym projekcie jest \textbf{las}. Używamy jej
+do~przechowywania przejść algorytmu DFS w~naszych algorytmach. Jest to~lista
 drzew, gdzie każde drzewo jest jednym przejściem algorytmu DFS. Poniżej
-przykład grafu i odpowiedniego mu drzewa (przy założeniu, że zaczynamy od
-wierzchołka nr 1):
+przykład grafu i~odpowiedniego mu~drzewa (przy założeniu, że~zaczynamy
+od~wierzchołka nr~1):
 
 \begin{figure}[H]
   \centering
@@ -260,9 +260,9 @@ wierzchołka nr 1):
   \end{tikzpicture}
 \end{figure}
 
-Na potrzeby projektu powstała również lista grafów, która służy do
-przechowywania grafów utworzonych ręcznie na potrzeby testów jednostkowych oraz
-prezentacji możliwości algorytmu w interfejsie użytkownika.
+Na~potrzeby projektu powstała również lista grafów, która służy
+do~przechowywania grafów utworzonych ręcznie na~potrzeby testów jednostkowych
+oraz prezentacji możliwości algorytmu w~interfejsie użytkownika.
 
 \section{Projekt testów}
 
@@ -276,28 +276,27 @@ większych grafów oraz weryfikacji złożoności czasowych algorytmów.
 
 \section{Założenia programu}
 
-Program ma za zadanie obliczać częściową spójność grafów. Zaimplementowane
-zostaną 2 algorytmy. Na potrzeby testów i
-prezentacji zostaną zaimplementowane generatory grafów. Interfejs pozwoli na
-wybór grafu, a
-następnie śledzenie działania algorytmu badającego częściową spójność.
-Jeśli chodzi o parametry generatora grafów, będzie można ustalić maksymalną liczbę
-wierzchołków, jaką będzie posiadał wygenerowany graf.
+Program ma~za~zadanie obliczać częściową spójność grafów. Zaimplementowane
+zostaną 2~algorytmy. Na~potrzeby testów i~prezentacji zostaną zaimplementowane
+generatory grafów. Interfejs pozwoli na~wybór grafu, a~następnie śledzenie
+działania algorytmu badającego częściową spójność. Jeśli chodzi o~parametry
+generatora grafów, będzie można ustalić maksymalną liczbę wierzchołków, jaką
+będzie posiadał wygenerowany graf.
 
 \section{Przykładowe zastosowanie}
 
-Algorytm sprawdzający, czy graf jest częściowo spójny, może się przydać w
-zastosowaniach związanych z szukaniem powiązań między przedmiotami badań.
+Algorytm sprawdzający, czy graf jest częściowo spójny, może się przydać
+w~zastosowaniach związanych z~szukaniem powiązań między przedmiotami badań.
 
-Przykładowo taki algorytm może znaleźć zastosowanie podczas badań słów i
-zależności między nimi. W tym wypadku pozytywny wynik algorytmu oznaczałby, ze
-wszystkie słowa z badanej grupy są powiązane badanymi relacjami.
+Przykładowo taki algorytm może znaleźć zastosowanie podczas badań słów
+i~zależności między nimi. W~tym wypadku pozytywny wynik algorytmu oznaczałby,
+ze~wszystkie słowa z~badanej grupy są~powiązane badanymi relacjami.
 
-Kolejnym przykładem użycia algorytmu może być sieć komputerowa, w której zdarzają się kanały
-komunikacyjne, w których dane przesyłane mogą być tylko w jedną stronę. Wtedy po
-zaprojektowaniu takiej sieci można by użyć tego algorytmu by sprawdzić, czy
-istnieje komunikacja w którąkolwiek ze stron między wszystkimi komputerami w
-sieci.
+Kolejnym przykładem użycia algorytmu może być sieć komputerowa, w~której
+zdarzają się kanały komunikacyjne, w~których dane przesyłane mogą być tylko
+w~jedną stronę. Wtedy po~zaprojektowaniu takiej sieci można by~użyć tego
+algorytmu by~sprawdzić, czy istnieje komunikacja w~którąkolwiek ze~stron między
+wszystkimi komputerami w~sieci.
 
 \newpage
 
@@ -305,17 +304,16 @@ sieci.
 
 \section{Instrukcja obsługi}
 
-Program ma za zadanie obliczać częściową spójność grafów. Zaimplementowane
-zostały trzy algorytmy. Jeden z nich jednak wyznacza jedynie pełną spójność,
-jednak zdecydowaliśmy się go pozostawić w programie. Na potrzeby testów i
-prezentacji zostały zaimplementowane generatory grafów. Dostępne są również
-specjalne przypadki grafów, które stworzyliśmy ręcznie do testów. Interfejs
-użytkownika pozwala na wybranie specjalnego przypadku grafu bądź jego
-wygenerowanie, a
-następnie śledzenie działania algorytmu badającego częściową spójność. Pasek
-postępu poinformuje użytkownika o końcu przetwarzania grafu przez algorytm.
-Jeśli chodzi o parametry generatora grafów, można ustalić maksymalną liczbę
-wierzchołków, jaką będzie posiadał wygenerowany graf.
+Program ma~za~zadanie obliczać częściową spójność grafów. Zaimplementowane
+zostały trzy algorytmy. Jeden z~nich jednak wyznacza jedynie pełną spójność,
+jednak zdecydowaliśmy się go~pozostawić w~programie. Na~potrzeby testów
+i~prezentacji zostały zaimplementowane generatory grafów. Dostępne są~również
+specjalne przypadki grafów, które stworzyliśmy ręcznie do~testów. Interfejs
+użytkownika pozwala na~wybranie specjalnego przypadku grafu bądź jego
+wygenerowanie, a~następnie śledzenie działania algorytmu badającego częściową
+spójność. Pasek postępu poinformuje użytkownika o~końcu przetwarzania grafu
+przez algorytm. Jeśli chodzi o~parametry generatora grafów, można ustalić
+maksymalną liczbę wierzchołków, jaką będzie posiadał wygenerowany graf.
 
 \section{Wyniki poprawności algorytmów}
 
@@ -408,31 +406,29 @@ kwadratowa.
 
 \section{Wnioski}
 
-Podczas planowania oraz implementacji projektu doszliśmy do następujących
+Podczas planowania oraz implementacji projektu doszliśmy do~następujących
 wniosków:
 
 \begin{itemize}
-	\item Należy dobrze przemyśleć projekt grafów, które będą używane do testów.
-		Wielokrotnie zdarzało się tak, że byliśmy niemal pewni poprawności
-		algorytmu, jednak w późniejsze fazie projektu nagle okazywało się, że
-		nie jest on poprawny.
-	\item Warto stworzyć lub skorzystać z generatora grafów, którego losowość
-		pozwoli na wykrycie problemów, które nie były wzięte pod uwagę podczas
-		projektu testów.
-	\item Dla problemu częściowej spójności grafu bardzo trudno stworzyć dobrej
-		jakości testy wydajnościowe. Problemem jest stworzenie dowolnie dużych
-		grafów częściowo spójnych w taki sposób, żeby wymagały one wykonania
-		maksymalnej liczby kroków algorytmów.
-	\item Ciężko jest przedstawić działanie algorytmów w interfejsie
-		użytkownika, ponieważ każdy z wierzchołków może być odwiedzony
-		kilkukrotnie.
-	\item Język Scala był dobrym wyborem, pisało się nam w nim bardzo
-		przyjemnie. Pozwala również na używanie bibliotek języka Java co było
-		pomocne podczas implementacji interfejsu użytkownika.
-	\item Użyta przez nas biblioteka JGraphX pozwala na w miarę prostą
-		wizualizację grafów, jednak według nas zasługuje na ponowne przepisanie.
-		Używa ona przestarzałej, mało czytelniej składni języka (np.: brak typów
-		generycznych).
+\item Należy dobrze przemyśleć projekt grafów, które będą używane do~testów.
+  Wielokrotnie zdarzało się tak, że~byliśmy niemal pewni poprawności algorytmu,
+  jednak w~późniejsze fazie projektu nagle okazywało się, że~nie jest
+  on~poprawny.
+\item Warto stworzyć lub skorzystać z~generatora grafów, którego losowość
+  pozwoli na~wykrycie problemów, które nie były wzięte pod uwagę podczas
+  projektu testów.
+\item Dla problemu częściowej spójności grafu bardzo trudno stworzyć dobrej
+  jakości testy wydajnościowe. Problemem jest stworzenie dowolnie dużych grafów
+  częściowo spójnych w~taki sposób, żeby wymagały one wykonania maksymalnej
+  liczby kroków algorytmów.
+\item Ciężko jest przedstawić działanie algorytmów w~interfejsie użytkownika,
+  ponieważ każdy z~wierzchołków może być odwiedzony kilkukrotnie.
+\item Język Scala był dobrym wyborem, pisało się nam w~nim bardzo przyjemnie.
+  Pozwala również na~używanie bibliotek języka Java co~było pomocne podczas
+  implementacji interfejsu użytkownika.
+\item Użyta przez nas biblioteka JGraphX pozwala na~w~miarę prostą wizualizację
+  grafów, jednak według nas zasługuje na~ponowne przepisanie. Używa ona
+  przestarzałej, mało czytelniej składni języka (np.: brak typów generycznych).
 \end{itemize}
 
 \end{document}
