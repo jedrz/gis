@@ -315,6 +315,18 @@ spójność. Pasek postępu poinformuje użytkownika o~końcu przetwarzania graf
 przez algorytm. Jeśli chodzi o~parametry generatora grafów, można ustalić
 maksymalną liczbę wierzchołków, jaką będzie posiadał wygenerowany graf.
 
+\subsection{Zbudowanie i~uruchomienie projektu}
+
+Do~uruchomienia projektu wymagane jest narzędzie do~budowania projektu
+przeznaczone dla języka Scala -- sbt.
+
+W~katalogu projektu, po~uruchomieniu sbt można uruchomić:
+\begin{itemize}
+\item testy jednostkowe -- komenda \verb+test+,
+\item interfejs graficzny -- \verb+gisJVM/run gis.jvm.Main+,
+\item testy wydajnościowe -- \verb+gisJVM/run gis.jvm.PerformanceTests+.
+\end{itemize}
+
 \section{Wyniki poprawności algorytmów}
 
 Poprawność algorytmów, tak jak opisaliśmy w~sprawozdaniu 2, sprawdziliśmy
