@@ -9,7 +9,7 @@ import com.mxgraph.model.mxCell
 import com.mxgraph.swing.mxGraphComponent
 import com.mxgraph.util.mxConstants._
 import com.mxgraph.view.mxGraph
-import gis.shared.{AdjacencyList, Graph, Solution, Vertex}
+import gis.shared._
 
 class GraphVisualization(newJPanel: JPanel) {
   val jPanel: JPanel = newJPanel
@@ -18,25 +18,12 @@ class GraphVisualization(newJPanel: JPanel) {
   var solution: Solution = (Nil, false)
   var stepNo: Int = 1
 
-  def addVertex(vertex: Vertex): Unit = {
-    val addedVertex = graphView.insertVertex(graphView.getDefaultParent, vertex.toString, vertex, 1, 1, 50, 50, "NOT_VISITED")
-    vertexMap += (vertex -> addedVertex.asInstanceOf[mxCell])
-  }
-
-  def addEdge(from: Vertex, to: Vertex): Unit = {
-    graphView.insertEdge(graphView.getDefaultParent, from + "-" + to, "", vertexMap.get(from).orNull, vertexMap.get(to).orNull)
-  }
-
-  def addEdges(edges: (Vertex, AdjacencyList)): Unit = {
-    edges._2.foreach(addEdge(edges._1, _))
-  }
-
   def visualizeGraph(graph: Graph): Unit = {
     jPanel.removeAll()
     setUpVertexStyles()
     graphView.getModel.beginUpdate()
     graph.vertices.foreach(addVertex)
-    graph.adjacencyLists.foreach(addEdges)
+    graph.edges.foreach(addEdge)
     graphView.getModel.endUpdate()
     graphView.setCellsSelectable(false)
     val graphComponent = new mxGraphComponent(graphView)
@@ -48,6 +35,18 @@ class GraphVisualization(newJPanel: JPanel) {
     myLayout.setUseBoundingBox(false)
     myLayout.execute(graphView.getDefaultParent)
     jPanel.add(graphComponent, new GridBagConstraints)
+  }
+
+  def addVertex(vertex: Vertex): Unit = {
+    val addedVertex = graphView.insertVertex(graphView.getDefaultParent, vertex.toString, vertex, 1, 1, 50, 50, "NOT_VISITED")
+    vertexMap += (vertex -> addedVertex.asInstanceOf[mxCell])
+  }
+
+  def addEdge(edge : Edge): Unit = {
+    val id = edge._1 + "-" + edge._2
+    val source = vertexMap.get(edge._1).orNull
+    val target = vertexMap.get(edge._2).orNull
+    graphView.insertEdge(graphView.getDefaultParent, id, "", source, target)
   }
 
   def visualize(solution: Solution, graph: Graph): Unit = {
