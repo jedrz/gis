@@ -26,4 +26,30 @@ class SimpleAlgorithm(val graph: Graph) extends GraphConnectivity {
       .toList
   }
 
+  def solve: (List[Vertex], Boolean) = {
+    var verticesList: List[Vertex] = List.empty
+    val pairs = allVertexPairCombinations
+    val result = pairs forall { case (from, to) =>
+      val dfsFromFull = graph.dfs(from)
+      val dfsFrom = dfsFromFull.takeWhile(_ != to)
+      verticesList = verticesList ++ dfsFrom
+      if (!dfsFromFull.contains(to)) {
+        val dfsToFull = graph.dfs(to)
+        val dfsTo = dfsToFull.takeWhile(_ != from) ++ List(from)
+        verticesList = verticesList ++ dfsTo
+        if (dfsToFull.contains(from)) {
+          verticesList = verticesList ++ List(from)
+          true
+        }
+        else {
+          false
+        }
+      }
+      else {
+        verticesList = verticesList ++ List(to)
+        true
+      }
+    }
+    (verticesList, result)
+  }
 }
