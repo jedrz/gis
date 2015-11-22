@@ -35,7 +35,7 @@ class SimpleAlgorithm(val graph: Graph) extends GraphConnectivity {
       verticesList = verticesList ++ dfsFrom
       if (!dfsFromFull.contains(to)) {
         val dfsToFull = graph.dfs(to)
-        val dfsTo = dfsToFull.takeWhile(_ != from) ++ List(from)
+        val dfsTo = dfsToFull.takeWhile(_ != from)
         verticesList = verticesList ++ dfsTo
         if (dfsToFull.contains(from)) {
           verticesList = verticesList ++ List(from)
