@@ -103,9 +103,10 @@ wierzchołek $u$ uruchamiając procedurę \emph{DFS} z~$v$ lub odwrotnie.
 
 \subsubsection{Złożoność}
 
-Musimy wykonać $q$ (liczba krawędzi) razy procedurę DFS\@. Złożoność przejścia
-jednego uruchomienia algorytmu DFS to~$O(n + q)$, więc złożoność całego
-algorytmu to~$O(q(n + q))$, gdzie $n$ -- liczba wierzchołków.
+Musimy wykonać ${n \choose 2} = \frac{n(n - 1)}{2}$ (liczba par wierzchołków)
+razy procedurę DFS\@. Złożoność przejścia jednego uruchomienia algorytmu DFS
+to~$O(n + q)$, więc złożoność całego algorytmu to~$O(n^2(n + q))$, gdzie $n$ --
+liczba wierzchołków, $q$ -- liczba krawędzi.
 
 \subsection{Bazujący na~silnie spójnych składowych}
 
@@ -130,8 +131,7 @@ Algorytm zaś wygląda następująco:
 
 \begin{enumerate}
 \item\label{sec:kosaraju-alg-1-pt} Wyznaczamy listę wierzchołków w~kolejności
-  przetworzenia wierzchołków grafu algorytmem DFS, czyli odwrotną
-  do~posortowania topologicznego.
+  posortowania topologicznego.
 \item\label{sec:kosaraju-alg-2-pt} Wykonujemy algorytm DFS dla grafu
   transponowanego, dla każdego wierzchołka
   z~punktu~\ref{sec:kosaraju-alg-1-pt}. Każde otrzymane drzewo DFS, zawiera
@@ -141,7 +141,8 @@ Algorytm zaś wygląda następująco:
 W~punkcie~\ref{sec:kosaraju-alg-1-pt} ważne jest, aby procedurą DFS odwiedzić
 wszystkie wierzchołki. W~ten sposób otrzymamy las drzew DFS.\@ Przechodząc
 każde drzewo w~kolejności \emph{post-order} (najpierw podrzewa, na~koniec
-węzeł), otrzymamy kolejność odwiedzania wierzchołków wymaganą w~kolejnym kroku.
+węzeł), otrzymamy kolejność odwrotną do~posortowania topologicznego. Należy
+więc jeszcze odwrócić listę wierzchołków.
 
 Krok~\ref{sec:kosaraju-alg-2-pt} algorytmu wykorzystuje własność grafu
 transponowanego taką, że~posiada on~identyczne silnie spójne składowe, jak graf
