@@ -26,6 +26,18 @@ class SCCBasedAlgorithm(val graph: Graph) extends GraphConnectivity with ClassNa
       }
       .toMap
   }
+
+  def solve: (SCC, Graph, Boolean)= {
+    val scc = graph.findSCC
+    val mapping = verticesMapping(scc)
+    val vertices = scc.indices
+    val empty = Graphs.initGraphWithVertices(vertices)
+    val mappedGraph = graph.edges.foldLeft(empty) { case (newGraph, (from, to)) =>
+      newGraph.withEdge(mapping(from), mapping(to))
+    }
+    val isPartiallyConnected = new SimpleAlgorithm(mappedGraph).isPartiallyConnected
+    (scc, mappedGraph, isPartiallyConnected)
+  }
 }
 
 object SCCBasedAlgorithm {
