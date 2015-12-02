@@ -18,6 +18,9 @@
 \usetikzlibrary{arrows,positioning,automata}
 \tikzset{>=stealth',shorten >=1pt,auto,thick,main node/.style={circle,fill=blue!30,draw,minimum size=0.8cm,inner sep=0pt,font=\sffamily\large\bfseries},edge/.style={thick,double}}
 
+\usepackage{pgfplots, pgfplotstable}
+\pgfplotsset{width=10cm,compat=1.9}
+
 \frenchspacing
 
 \usepackage{algorithm}
@@ -501,6 +504,75 @@ posiada złożoności liniowej (zwiększenie rozmiaru danych, nie zwiększa o~ty
 samo czasu wykonania algorytmu), a~bardziej
 liniowo-loga\dywiz{}ryt\dywiz{}miczną. Nie jest to~też jednak złożoność
 kwadratowa.
+
+Dla ilustracji zamieściliśmy jeszcze wykres poniżej.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Czas działania algorytmów},
+    xlabel={$n + q$},
+    ylabel={ms},
+    xmin=0, xmax=50000,
+    ymin=0, ymax=2500,
+    xtick={0,10000,20000,30000,40000,50000},
+    ytick={0,500,1000,1500,2000,2500},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+    scale=1.3
+]
+\addplot[
+    color=blue,
+    mark=square,
+    thick
+    ]
+    coordinates {
+      (1225,6.266382)
+      (4950,44.818867)
+      (11175,151.670063)
+      (19900,361.261148)
+      (31125,712.788966)
+      (44850,1236.344434)
+    };
+    \addlegendentry{Wielokrotny DFS}
+\addplot[mark=none, forget plot] table [y={create col/linear regression={}}]
+  {
+    X    Y
+    19900    361.261148
+    31125    712.788966
+  };
+  \xdef\slope{\pgfplotstableregressiona}
+  \xdef\yintercept{\pgfplotstableregressionb}
+\addplot [draw= magenta, domain=0:50000, forget plot] (x,\slope*x+\yintercept);
+\addplot[
+    color=red,
+    mark=square,
+    thick
+    ]
+    coordinates {
+      (1225,11.755333)
+      (4950,84.162854)
+      (11175,280.121112)
+      (19900,718.690892)
+      (31125,1436.837296)
+      (44850,2492.040605)
+    };
+    \addlegendentry{SSS}
+\addplot[mark=none, forget plot] table [y={create col/linear regression={}}]
+  {
+    X    Y
+    19900    718.690892
+    31125    1436.837296
+  };
+  \xdef\slope{\pgfplotstableregressiona}
+  \xdef\yintercept{\pgfplotstableregressionb}
+\addplot [draw= green, domain=0:50000, forget plot] (x,\slope*x+\yintercept);
+\end{axis}
+\end{tikzpicture}
+\caption{Wyniki dla grafu pełnego}
+\end{figure}
 
 \begin{table}[H]
   \centering
