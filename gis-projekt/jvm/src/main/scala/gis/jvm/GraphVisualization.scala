@@ -87,7 +87,6 @@ class GraphVisualization(newJPanel: JPanel) {
         solutionScc = (components, solutionScc._2, solutionScc._3)
         true
       case _ =>
-        visualizeGraph(solutionScc._2)
         false
     }
   }
@@ -105,7 +104,13 @@ class GraphVisualization(newJPanel: JPanel) {
   def colorVertex(vertex: Vertex): Unit = {
     val visualizedVertex = vertexMap(vertex)
     visualizedVertex.setValue(visualizedVertex.getId + "/" + stepNo)
-    graphView.setCellStyle(colors(stepNo) ,Array(visualizedVertex))
+    graphView.setCellStyle(colors(stepNo), Array(visualizedVertex))
+    graphView.refresh()
+  }
+
+  def colorVertex(vertex: Vertex, color : String): Unit = {
+    val visualizedVertex = vertexMap(vertex)
+    graphView.setCellStyle(color, Array(visualizedVertex))
     graphView.refresh()
   }
 
@@ -124,14 +129,18 @@ class GraphVisualization(newJPanel: JPanel) {
     graphView.setStylesheet(stylesheet)
   }
 
+  def colorVertices(colors : List[String]): Unit ={
+    colors.indices.foreach(i => colorVertex(i, colors(i)))
+  }
+
   def rainbow(length : Int) : List[String] = {
     val center = 200
     val width = 55
 
     (0 to (length - 1)).foldLeft(List.empty[String])((list, i) => {
-      val red = Math.sin(0.7 * i + 0) * width + center
-      val green = Math.sin(0.7 * i + 2) * width + center
-      val blue = Math.sin(0.7 * i + 4) * width + center
+      val red = Math.sin(0.6 * i + 0) * width + center
+      val green = Math.sin(0.6 * i + 2) * width + center
+      val blue = Math.sin(0.6 * i + 4) * width + center
       val hexColor = "#" + toHexString(red) + toHexString(green) + toHexString(blue)
       hexColor :: list
     })
