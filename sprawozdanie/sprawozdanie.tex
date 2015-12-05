@@ -172,18 +172,18 @@ Poniżej przykład grafu i~odpowiadającego mu~drzewa (przy założeniu,
 Niech węzeł drzewa DFS składa się z~wierzchołka oraz węzłów dzieci.
 
 \begin{algorithm}[H]
-\caption{Drzewo DFS dla wierzchołka -- drzewo(start, odwiedzone)}
+\caption{Drzewo DFS dla wierzchołka -- drzewo(start, graf, odwiedzone)}
 \begin{algorithmic}[1]
-\Require $start$ -- wierzchołek startowy, $odwiedzone$ -- zbiór odwiedzonych wierzchołków
+\Require $start$ -- wierzchołek startowy, $graf$ --- graf, $odwiedzone$ -- zbiór odwiedzonych wierzchołków
 \If{$odwiedzone$ zawiera $start$}
 \State \Return{nic}
 \Else
 \State $odwiedzone \gets odwiedzone \ \text{dodaj} \ start$
-\State $sasiedzi \gets \text{sasiedzi}(start) \ \text{oprocz} \ odwiedzone$ \label{alg:dfs-tree:sasiedzi}
+\State $sasiedzi \gets \text{sasiedzi}(start, graf) \ \text{oprocz} \ odwiedzone$ \label{alg:dfs-tree:sasiedzi}
 \State $poddrzewa \gets \emptyset$
 \ForAll{$sasiad \in sasiedzi$}
-\State $poddrzewo \gets \text{drzewo}(sasiad, odwiedzone)$ \Comment{rekurencja}
-\State $odwiedzone \gets odwiedzone \ \text{dodaj} \ \text{wierzcholki}(poddrzewo)$ \label{alg:dfs-tree:wierzcholki}
+\State $poddrzewo \gets \text{drzewo}(sasiad, graf, odwiedzone)$ \Comment{rekurencja}
+\State $odwiedzone \gets odwiedzone \ \text{rozszerz-o} \ \text{wierzcholki}(poddrzewo)$ \label{alg:dfs-tree:wierzcholki}
 \State $poddrzewa \gets poddrzewa \ \text{dodaj} \ poddrzewo$
 \EndFor
 \State \Return{$(start, poddrzewa)$}
@@ -293,6 +293,28 @@ pierwotny. Dodatkowo odwiedzone wierzchołki we~wcześniejszych wywołaniach DFS
 powinny być pomijane. Innymi słowy, używamy tego samego zbioru wierzchołków
 odwiedzonych dla wszystkich wywołań DFS.
 
+Pseudokod opisanego algorytmu jest następujący:
+
+\begin{algorithm}[H]
+\caption{Silnie spójne składowe -- sss(graf)}
+\begin{algorithmic}[1]
+\Require $graf$
+\State $wierzcholki \gets \text{sortuj-topologiczne}(graf)$
+\State $graf \gets \text{transponuj}(graf)$
+\State $odwiedzone \gets \emptyset$ \Comment{zbiór wierzchołków}
+\State $skladowe \gets \emptyset$ \Comment{lista list wierzchołków}
+\ForAll{$v \in wierzcholki$}
+\If{$odwiedzone \ \text{zawiera} \ v$}
+\Continue
+\EndIf
+\State $odwiedzoneDlaV \gets \text{post-order(drzewo(} v, graf, odwiedzone))$
+\State $odwiedzone \gets odwiedzone \ \text{rozszerz-o} \ odwiedzoneDlaV$
+\State $skladowe \gets skladowe \ \text{dodaj} \ odwiedzoneDlaV$ \Comment{nowa składowa}
+\EndFor
+\State \Return{$skladowe$}
+\end{algorithmic}
+\end{algorithm}
+
 \subsubsection{Złożoność}
 
 \begin{enumerate}
@@ -309,29 +331,29 @@ odwiedzonych dla wszystkich wywołań DFS.
 
 Ostatni algorytm opiera się na~wielokrotnym przechodzeniu grafu.
 
-Rozpoczynamy z~listą wierzchołków do~odwiedzenia $toVisit$ oraz pustym zbiorem
-wierzchołków odwiedzonych $visited$. Dopóki lista $toVisit$ nie jest pusta:
+Rozpoczynamy z~listą wierzchołków do~odwiedzenia $doOdwiedzenia$ oraz pustym zbiorem
+wierzchołków odwiedzonych $odwiedzone$. Dopóki lista $doOdwiedzenia$ nie jest pusta:
 \begin{enumerate}
-\item pobierz pierwszy wierzchołek $v$ z~listy $toVisit$,
+\item pobierz pierwszy wierzchołek $v$ z~listy $doOdwiedzenia$,
 \item dla $v$ wywołaj $DFS$,
 \item\label{item:multiple-dfs:cond} sprawdź, czy wszystkie odwiedzone
-  wierzchołki w~$DFS(v)$ są~w~zbiorze $visited$,
+  wierzchołki w~$DFS(v)$ są~w~zbiorze $odwiedzone$,
 \begin{enumerate}[label*=\arabic*.]
-\item jeśli tak, to~usuń z~listy $toVisit$ odwiedzone wierzchołki w~$DFS(v)$,
-  a~do~zbioru $visited$ przypisz wierzchołki odwiedzone w~$DFS(v)$,
+\item jeśli tak, to~usuń z~listy $doOdwiedzenia$ odwiedzone wierzchołki w~$DFS(v)$,
+  a~do~zbioru $odwiedzone$ przypisz wierzchołki odwiedzone w~$DFS(v)$,
 \item w~przeciwnym przypadku, graf nie jest częściowo spójny.
 \end{enumerate}
 \end{enumerate}
 
 Intuicja za~punktem~\ref{item:multiple-dfs:cond}, opiera się na~tym,
-że~w~pewnym kroku algorytmu, wszystkie wierzchołki w~zbiorze $visited$ stanowią
+że~w~pewnym kroku algorytmu, wszystkie wierzchołki w~zbiorze $odwiedzone$ stanowią
 podgraf częściowo spójny. Wykonując więc DFS na~pierwszym wierzchołku $v$
-z~listy $toVisit$, musimy odwiedzić wszystkie wierzchołki z~$visited$. Jeśli
+z~listy $doOdwiedzenia$, musimy odwiedzić wszystkie wierzchołki z~$odwiedzone$. Jeśli
 tak się nie stanie, to~graf okaże się nieczęściowo spójny. Wynika to~z~tego,
-że~skoro $v$ nie jest osiągalny z~żadnego wierzchołka z~$visited$, to~wszystkie
-wierzchołki z~$visited$ muszą być osiągalne przez $v$.
+że~skoro $v$ nie jest osiągalny z~żadnego wierzchołka z~$odwiedzone$, to~wszystkie
+wierzchołki z~$odwiedzone$ muszą być osiągalne przez $v$.
 
-Doprecyzowania wymaga jeszcze kolejność wierzchołków w~liście $toVisit$.
+Doprecyzowania wymaga jeszcze kolejność wierzchołków w~liście $doOdwiedzenia$.
 Mianowicie, należy je~przetwarzać w~kolejności odwrotnej do~posortowania
 topologicznego wierzchołków. Zapobiega to~przypadkom, że~kilka podgrafów, jest
 osiągalnych z~pewnego wierzchołka, mimo że~żadne wierzchołki z~podgrafów nie
@@ -351,6 +373,28 @@ są~wzajemnie osiągalne. Jako przykład można rozważyć graf:
 Rozpoczynając od~$1$, wszystkie wierzchołki zostałyby odwiedzone, mimo że~nie
 istnieje ścieżka $2 \to 3$ lub $3 \to 2$, więc graf zostałby niepoprawnie
 sklasyfikowany jako częściowo spójny.
+
+Pseudokod omówionego algorytmu wygląda następująco:
+
+\begin{algorithm}[H]
+\caption{Wielokrotny DFS -- multi-dfs(graf)}
+\begin{algorithmic}[1]
+\Require $graf$
+\State $doOdwiedzenia \gets \text{post-order(las}(graf))$
+\State $odwiedzone \gets \emptyset$
+\While{$\neg \text{pusta}(doOdwiedzenia)$}
+\State $v \gets \text{pierwszy}(doOdwiedzenia)$
+\State $odwiedzoneDlaV \gets \text{post-order(drzewo(} v, graf, odwiedzone))$
+\If{$odwiedzone \subseteq odwiedzoneDlaV$}
+\State $doOdwiedzenia \gets doOdwiedzenia \ \text{usun-wszystkie} \ odwiedzoneDlaV$
+\State $odwiedzone \gets odwiedzoneDlaV$
+\Else
+\State \Return{\textbf{fałsz}}
+\EndIf
+\EndWhile
+\State \Return{\textbf{prawda}}
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection{Złożoność}
 
