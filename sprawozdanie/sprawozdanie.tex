@@ -5,6 +5,7 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{float}
 
 % reset numerowania sekcji w częściach
@@ -18,7 +19,42 @@
 \usetikzlibrary{arrows,positioning,automata}
 \tikzset{>=stealth',shorten >=1pt,auto,thick,main node/.style={circle,fill=blue!30,draw,minimum size=0.8cm,inner sep=0pt,font=\sffamily\large\bfseries},edge/.style={thick,double}}
 
+\usepackage{pgfplots, pgfplotstable}
+\pgfplotsset{width=10cm,compat=1.9}
+
 \frenchspacing
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\listalgorithmname}{Spis algorytmów}
+\floatname{algorithm}{Algorytm}
+\newcommand{\algorithmicbreak}{\textbf{przerwij}}
+\newcommand{\Break}{\State \algorithmicbreak}
+\newcommand{\algorithmiccontinue}{\textbf{kontynuuj}}
+\newcommand{\Continue}{\State \algorithmiccontinue}
+\renewcommand{\algorithmicprocedure}{\textbf{procedura}}
+\renewcommand{\algorithmicrequire}{\textbf{argumenty wejściowe:}}
+\renewcommand{\algorithmicensure}{\textbf{zwraca:}}
+\renewcommand{\algorithmicend}{\textbf{koniec}}
+\renewcommand{\algorithmicif}{\textbf{jeśli}}
+\renewcommand{\algorithmicthen}{\textbf{to}}
+\renewcommand{\algorithmicelse}{\textbf{w~przeciwnym wypadku}}
+% \renewcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+% \renewcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\renewcommand{\algorithmicfor}{\textbf{dla}}
+\renewcommand{\algorithmicforall}{\textbf{dla wszystkich}}
+\renewcommand{\algorithmicdo}{\textbf{wykonaj}}
+% \renewcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+\renewcommand{\algorithmicwhile}{\textbf{dopóki}}
+% \renewcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
+% \renewcommand{\algorithmicloop}{\textbf{loop}}
+% \renewcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+% \renewcommand{\algorithmicrepeat}{\textbf{repeat}}
+% \renewcommand{\algorithmicuntil}{\textbf{until}}
+% \renewcommand{\algorithmicprint}{\textbf{print}}
+\renewcommand{\algorithmicreturn}{\textbf{zwróc}}
+% \renewcommand{\algorithmictrue}{\textbf{prawda}}
+% \renewcommand{\algorithmicfalse}{\textbf{fałsz}}
 
 \title{
     Grafy i~Sieci \\
@@ -93,7 +129,162 @@ osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 
 \part{Sprawozdanie 2}
 
+\section{Dowód}
+\newtheorem{thesis}{Teza}
+\begin{thesis}
+Graf skierowany jest częściowo spójny wtedy i tylko wtedy,
+gdy istnieje ścieżka łącząca wszystkie wierzchołki.
+\end{thesis}
+
+\begin{proof}
+  Załóżmy, że graf $D$ jest częśćiowo spójny. Niech $Q$ będzie ścieżką
+  zawierającą maksymalną liczbę wierzchołków oraz zaczynającą się od
+  wierzchołka $v_1$ i kończącą na wierzchołku $v_2$. Jeśli $Q$ łączy wszystkie
+  wierzchołki, to nie ma czego udowadniać. Załóżmy więc, że $Q$ nie łączy
+  wszystkich wierzchołków. W takim wypadku musi istnieć wierzchołek $u$, który
+  nie jest częścią ścieżki $Q$. Oznacza to również, że nie istnieją ścieżki
+  z $u$ do $v_1$ oraz z $v_2$ do $u$. Ponieważ graf $D$ jest częśćiowo spójny
+  i nie zawiera ścieżki z $u$ do $v_1$, musi zawierać ścieżkę z $v_1$ do $u$.
+
+  Niech $w$ będzie wierzchołkiem takim, że $w \neq v_1$ i $w$ jest ostatnim
+  wierzchołkiem ścieżki $Q$, dla którego istnieje ścieżka z $w$ do $u$. Niech
+  $Q_1$ będzie ścieżką z $w$ do $u$ w grafie $D$. Niech $z$ będzie wierzchołkiem
+  będącym bezpośrednio za ostatnim wystąpieniem $w$ w ścieżce $Q$. Nie istnieje
+  więc ścieżka z $z$ do $u$. Ponieważ graf jest częśćiowo spójny, musi istnieć
+  ścieżka $Q_2$ z $u$ do $z$.
+
+  Podążając ścieżką $Q$ od $v-1$ do ostatniego wystąpienia $w$, a następnie ścieżkami
+  $Q_1$ oraz $Q_2$, a potem kolejno od $z$ do $v_2$ otrzymujemy ścieżkę, która
+  przechodzi przez więcej wierzchołków niż $Q$. Jest to sprzeczność, co oznacza, że $Q$
+  jest ścieżką przechodzącą przez wszystkie wierzchołki grafu.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[main node, on grid] (v1) {$v_1$};
+    \node[main node, on grid] (w)  [right = 2cm of v1] {$w$};
+    \node[main node, on grid] (z)  [right = 2cm of w] {$z$};
+    \node[main node, on grid] (v2) [right = 2cm of z] {$v_2$};
+    \node[main node, on grid] (u) [above = 3cm of w] {$u$};
+    \path[edge] (v1) edge [->] node {} (w);
+    \path[edge] (w) edge [->] node {} (z);
+    \path[edge] (w) edge [->] node {$Q_1$} (u);
+    \path[edge] (u) edge [->] node {$Q_2$} (z);
+    \path[edge] (z) edge [->] node {} (v2);
+  \end{tikzpicture}
+\end{figure}
+
+\end{proof}
+
 \section{Algorytmy}
+
+\subsection{Wstęp}
+
+Na~początku opiszemy algorytmy używane w~algorytmach dotyczących problemu
+sprawdzania, czy graf jest częściowo spójny.
+
+\subsubsection{Przeszukiwanie w~głąb}
+\label{sec:dfs-tree}
+
+Zaimplementowany przez nas algorytm przeszukiwania w~głąb, rozpoczynając
+od~pewnego wierzchołka, zwraca drzewo, które odpowiada temu, w~jaki sposób graf
+został odwiedzony. Las z~kolei jest listą drzew, uzyskanych poprzez wyznaczenie
+drzew od~wierzchołków, które nie zostały wcześniej odwiedzone.
+
+Poniżej przykład grafu i~odpowiadającego mu~drzewa (przy założeniu,
+że~zaczynamy od~wierzchołka nr~1):
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[main node, on grid] (v1) {$1$};
+    \node[main node, on grid] (v2) [below right = 1.5cm and -2cm of v1] {$2$};
+    \node[main node, on grid] (v3) [below right = 1.5cm and 2cm of v1] {$3$};
+    \node[main node, on grid] (v4) [below = 3cm of v1] {$4$};
+    \path[edge] (v1) edge [->] node {} (v2);
+    \path[edge] (v1) edge [->] node {} (v3);
+    \path[edge] (v2) edge [->] node {} (v3);
+    \path[edge] (v2) edge [->] node {} (v4);
+
+	\node[main node, on grid] (x1) [right = 7cm of v1] {$1$};
+    \node[main node, on grid] (x2) [below = 2cm of x1] {$2$};
+    \node[main node, on grid] (x3) [below left = 1.5cm and 2cm of x2] {$3$};
+    \node[main node, on grid] (x4) [below right = 1.5cm and 2cm of x2] {$4$};
+
+	\path[edge] (x1) edge [->] node {} (x2);
+    \path[edge] (x2) edge [->] node {} (x3);
+    \path[edge] (x2) edge [->] node {} (x4);
+  \end{tikzpicture}
+\end{figure}
+
+Niech węzeł drzewa DFS składa się z~wierzchołka oraz węzłów dzieci.
+
+\begin{algorithm}[H]
+\caption{Drzewo DFS dla wierzchołka -- drzewo(start, graf, odwiedzone)}
+\begin{algorithmic}[1]
+\Require $start$ -- wierzchołek startowy, $graf$ --- graf, $odwiedzone$ -- zbiór odwiedzonych wierzchołków
+\If{$odwiedzone$ zawiera $start$}
+\State \Return{nic}
+\Else
+\State $odwiedzone \gets odwiedzone \ \text{dodaj} \ start$
+\State $sasiedzi \gets \text{sasiedzi}(start, graf) \ \text{oprocz} \ odwiedzone$ \label{alg:dfs-tree:sasiedzi}
+\State $poddrzewa \gets \emptyset$
+\ForAll{$sasiad \in sasiedzi$}
+\State $poddrzewo \gets \text{drzewo}(sasiad, graf, odwiedzone)$ \Comment{rekurencja}
+\State $odwiedzone \gets odwiedzone \ \text{rozszerz-o} \ \text{wierzcholki}(poddrzewo)$ \label{alg:dfs-tree:wierzcholki}
+\State $poddrzewa \gets poddrzewa \ \text{dodaj} \ poddrzewo$
+\EndFor
+\State \Return{$(start, poddrzewa)$}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+Komentarza wymaga linia~\ref{alg:dfs-tree:sasiedzi}. Operacja
+\textbf{sąsiedzi($start$)} zwraca listę sąsiadów wierzchołka w~grafie.
+W~linii~\ref{alg:dfs-tree:wierzcholki} \textbf{wierzcholki($poddrzewo$)} zwraca
+listę wierzchołków, które znajdują się w~drzewie.
+
+Wyznaczenie lasu DFS polega na~wyznaczeniu drzewa DFS dla każdego
+nieodwiedzonego wierzchołka grafu. Zbiór odwiedzonych wierzchołków powinien być
+aktualizowany po~każdym wyznaczonym drzewie DFS o~wierzchołki w~nim zawarte.
+Wynikiem jest lista drzew.
+
+\subsubsection{Przechodzenie drzewa DFS w~kolejności post-order}
+
+Czyli najpierw odwiedzone są~poddrzewa, a~na~koniec wartość w~węźle. Taka
+kolejność wierzchołków odpowiada posortowaniu wg~czasu zakończenia
+przetwarzania wierzchołka w~przechodzeniu algorytmem DFS.
+
+\begin{algorithm}[H]
+\caption{Przejście drzewa DFS w~kolejności post-order -- post-order(drzewo)}
+\begin{algorithmic}[1]
+\Require $drzewo$ -- drzewo DFS
+\State $listy \gets \emptyset$
+\ForAll{$podrzewo \in \text{poddrzewa}(drzewo)$}
+\State $listy \gets listy \ \text{dodaj} \ \text{post-order}(poddrzewo)$
+\EndFor
+\State $wierzcholki \gets \text{polacz-listy}(listy)$
+\State $wierzcholki \gets wierzcholki \ \text{dodaj} \ \text{wezel}(drzewo)$
+\State \Return{$wierzcholki$}
+\end{algorithmic}
+\end{algorithm}
+
+Aby otrzymać listę wierzchołków w~kolejności post-order dla lasu, wystarczy
+wywołać dla każdego drzewa w~liście powyższą procedurę, a~następnie złączyć
+elementy w~listach.
+
+\subsubsection{Sortowanie topologiczne}
+
+Sortowanie topologiczne wierzchołków grafu polega na~takim uporządkowaniu
+wierzchołków grafu, aby pewien wierzchołek $v$ znalazł się po innym wierzchołku
+$u$, wtedy gdy istnieje krawędź $v \to u$.
+
+Aby uzyskać opisaną kolejność wierzchołków wystarczy odwrócić listę
+wierzchołków odpowiadająca przejściu drzewa w~kolejności post-order.
+
+Należy w~tym miejscu zaznaczyć, że~w~grafach posiadających cykli, nie istnieje
+posortowanie topologiczne wierzchołków. Mimo to~opisana w~tej sekcji kolejność
+jest wystarczająca dla używanych przez nas algorytmów.
 
 \subsection{Z~definicji}
 \label{sec:from-definion-alg}
@@ -150,6 +341,28 @@ pierwotny. Dodatkowo odwiedzone wierzchołki we~wcześniejszych wywołaniach DFS
 powinny być pomijane. Innymi słowy, używamy tego samego zbioru wierzchołków
 odwiedzonych dla wszystkich wywołań DFS.
 
+Pseudokod opisanego algorytmu jest następujący:
+
+\begin{algorithm}[H]
+\caption{Silnie spójne składowe -- sss(graf)}
+\begin{algorithmic}[1]
+\Require $graf$
+\State $wierzcholki \gets \text{sortuj-topologiczne}(graf)$
+\State $graf \gets \text{transponuj}(graf)$
+\State $odwiedzone \gets \emptyset$ \Comment{zbiór wierzchołków}
+\State $skladowe \gets \emptyset$ \Comment{lista list wierzchołków}
+\ForAll{$v \in wierzcholki$}
+\If{$odwiedzone \ \text{zawiera} \ v$}
+\Continue
+\EndIf
+\State $odwiedzoneDlaV \gets \text{post-order(drzewo(} v, graf, odwiedzone))$
+\State $odwiedzone \gets odwiedzone \ \text{rozszerz-o} \ odwiedzoneDlaV$
+\State $skladowe \gets skladowe \ \text{dodaj} \ odwiedzoneDlaV$ \Comment{nowa składowa}
+\EndFor
+\State \Return{$skladowe$}
+\end{algorithmic}
+\end{algorithm}
+
 \subsubsection{Złożoność}
 
 \begin{enumerate}
@@ -166,29 +379,29 @@ odwiedzonych dla wszystkich wywołań DFS.
 
 Ostatni algorytm opiera się na~wielokrotnym przechodzeniu grafu.
 
-Rozpoczynamy z~listą wierzchołków do~odwiedzenia $toVisit$ oraz pustym zbiorem
-wierzchołków odwiedzonych $visited$. Dopóki lista $toVisit$ nie jest pusta:
+Rozpoczynamy z~listą wierzchołków do~odwiedzenia $doOdwiedzenia$ oraz pustym zbiorem
+wierzchołków odwiedzonych $odwiedzone$. Dopóki lista $doOdwiedzenia$ nie jest pusta:
 \begin{enumerate}
-\item pobierz pierwszy wierzchołek $v$ z~listy $toVisit$,
+\item pobierz pierwszy wierzchołek $v$ z~listy $doOdwiedzenia$,
 \item dla $v$ wywołaj $DFS$,
 \item\label{item:multiple-dfs:cond} sprawdź, czy wszystkie odwiedzone
-  wierzchołki w~$DFS(v)$ są~w~zbiorze $visited$,
+  wierzchołki w~$DFS(v)$ są~w~zbiorze $odwiedzone$,
 \begin{enumerate}[label*=\arabic*.]
-\item jeśli tak, to~usuń z~listy $toVisit$ odwiedzone wierzchołki w~$DFS(v)$,
-  a~do~zbioru $visited$ przypisz wierzchołki odwiedzone w~$DFS(v)$,
+\item jeśli tak, to~usuń z~listy $doOdwiedzenia$ odwiedzone wierzchołki w~$DFS(v)$,
+  a~do~zbioru $odwiedzone$ przypisz wierzchołki odwiedzone w~$DFS(v)$,
 \item w~przeciwnym przypadku, graf nie jest częściowo spójny.
 \end{enumerate}
 \end{enumerate}
 
 Intuicja za~punktem~\ref{item:multiple-dfs:cond}, opiera się na~tym,
-że~w~pewnym kroku algorytmu, wszystkie wierzchołki w~zbiorze $visited$ stanowią
+że~w~pewnym kroku algorytmu, wszystkie wierzchołki w~zbiorze $odwiedzone$ stanowią
 podgraf częściowo spójny. Wykonując więc DFS na~pierwszym wierzchołku $v$
-z~listy $toVisit$, musimy odwiedzić wszystkie wierzchołki z~$visited$. Jeśli
+z~listy $doOdwiedzenia$, musimy odwiedzić wszystkie wierzchołki z~$odwiedzone$. Jeśli
 tak się nie stanie, to~graf okaże się nieczęściowo spójny. Wynika to~z~tego,
-że~skoro $v$ nie jest osiągalny z~żadnego wierzchołka z~$visited$, to~wszystkie
-wierzchołki z~$visited$ muszą być osiągalne przez $v$.
+że~skoro $v$ nie jest osiągalny z~żadnego wierzchołka z~$odwiedzone$, to~wszystkie
+wierzchołki z~$odwiedzone$ muszą być osiągalne przez $v$.
 
-Doprecyzowania wymaga jeszcze kolejność wierzchołków w~liście $toVisit$.
+Doprecyzowania wymaga jeszcze kolejność wierzchołków w~liście $doOdwiedzenia$.
 Mianowicie, należy je~przetwarzać w~kolejności odwrotnej do~posortowania
 topologicznego wierzchołków. Zapobiega to~przypadkom, że~kilka podgrafów, jest
 osiągalnych z~pewnego wierzchołka, mimo że~żadne wierzchołki z~podgrafów nie
@@ -208,6 +421,28 @@ są~wzajemnie osiągalne. Jako przykład można rozważyć graf:
 Rozpoczynając od~$1$, wszystkie wierzchołki zostałyby odwiedzone, mimo że~nie
 istnieje ścieżka $2 \to 3$ lub $3 \to 2$, więc graf zostałby niepoprawnie
 sklasyfikowany jako częściowo spójny.
+
+Pseudokod omówionego algorytmu wygląda następująco:
+
+\begin{algorithm}[H]
+\caption{Wielokrotny DFS -- multi-dfs(graf)}
+\begin{algorithmic}[1]
+\Require $graf$
+\State $doOdwiedzenia \gets \text{post-order(las}(graf))$
+\State $odwiedzone \gets \emptyset$
+\While{$\neg \text{pusta}(doOdwiedzenia)$}
+\State $v \gets \text{pierwszy}(doOdwiedzenia)$
+\State $odwiedzoneDlaV \gets \text{post-order(drzewo(} v, graf, odwiedzone))$
+\If{$odwiedzone \subseteq odwiedzoneDlaV$}
+\State $doOdwiedzenia \gets doOdwiedzenia \ \text{usun-wszystkie} \ odwiedzoneDlaV$
+\State $odwiedzone \gets odwiedzoneDlaV$
+\Else
+\State \Return{\textbf{fałsz}}
+\EndIf
+\EndWhile
+\State \Return{\textbf{prawda}}
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection{Złożoność}
 
@@ -232,34 +467,8 @@ i~analogiczna lista przechowująca krawędzie. Wynik algorytmu przechowywany jes
 wraz z~grafem w~osobnej strukturze co~ma~na~celu uproszczenie implementacji
 interfejsu użytkownika.
 
-Najciekawszą strukturą w~naszym projekcie jest \textbf{las}. Używamy jej
-do~przechowywania przejść algorytmu DFS w~naszych algorytmach. Jest to~lista
-drzew, gdzie każde drzewo jest jednym przejściem algorytmu DFS. Poniżej
-przykład grafu i~odpowiedniego mu~drzewa (przy założeniu, że~zaczynamy
-od~wierzchołka nr~1):
-
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}
-    \node[main node, on grid] (v1) {$1$};
-    \node[main node, on grid] (v2) [below right = 1.5cm and -2cm of v1] {$2$};
-    \node[main node, on grid] (v3) [below right = 1.5cm and 2cm of v1] {$3$};
-    \node[main node, on grid] (v4) [below = 3cm of v1] {$4$};
-    \path[edge] (v1) edge [->] node {} (v2);
-    \path[edge] (v1) edge [->] node {} (v3);
-    \path[edge] (v2) edge [->] node {} (v3);
-    \path[edge] (v2) edge [->] node {} (v4);
-
-	\node[main node, on grid] (x1) [right = 7cm of v1] {$1$};
-    \node[main node, on grid] (x2) [below = 2cm of x1] {$2$};
-    \node[main node, on grid] (x3) [below left = 1.5cm and 2cm of x2] {$3$};
-    \node[main node, on grid] (x4) [below right = 1.5cm and 2cm of x2] {$4$};
-
-	\path[edge] (x1) edge [->] node {} (x2);
-    \path[edge] (x2) edge [->] node {} (x3);
-    \path[edge] (x2) edge [->] node {} (x4);
-  \end{tikzpicture}
-\end{figure}
+W~projekcie można odnaleźć także strukturę \textbf{lasu DFS}, która odpowiada
+zagadnieniu opisanemu w~sekcji~\ref{sec:dfs-tree}.
 
 Na~potrzeby projektu powstała również lista grafów, która służy
 do~przechowywania grafów utworzonych ręcznie na~potrzeby testów jednostkowych
@@ -345,7 +554,7 @@ niewystarczająca.
 \centering
 \includegraphics[width=0.6\textwidth]{generated-tricky-graph.jpg}
 \caption{Wygenerowany graf nieczęściowo spójny dla którego algorytm
-  z~wielokrotnym DFS zwraca błędny wynik}
+  z~wielokrotnym DFS zwraca błędny wynik (problematyczne wierzchołki: 9 i~10)}
 \label{fig:tricky-graph}
 \end{figure}
 
@@ -391,6 +600,75 @@ posiada złożoności liniowej (zwiększenie rozmiaru danych, nie zwiększa o~ty
 samo czasu wykonania algorytmu), a~bardziej
 liniowo-loga\dywiz{}ryt\dywiz{}miczną. Nie jest to~też jednak złożoność
 kwadratowa.
+
+Dla ilustracji zamieściliśmy jeszcze wykres poniżej.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Czas działania algorytmów},
+    xlabel={$n + q$},
+    ylabel={ms},
+    xmin=0, xmax=50000,
+    ymin=0, ymax=2500,
+    xtick={0,10000,20000,30000,40000,50000},
+    ytick={0,500,1000,1500,2000,2500},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+    scale=1.3
+]
+\addplot[
+    color=blue,
+    mark=square,
+    thick
+    ]
+    coordinates {
+      (1225,6.266382)
+      (4950,44.818867)
+      (11175,151.670063)
+      (19900,361.261148)
+      (31125,712.788966)
+      (44850,1236.344434)
+    };
+    \addlegendentry{Wielokrotny DFS}
+\addplot[mark=none, forget plot] table [y={create col/linear regression={}}]
+  {
+    X    Y
+    19900    361.261148
+    31125    712.788966
+  };
+  \xdef\slope{\pgfplotstableregressiona}
+  \xdef\yintercept{\pgfplotstableregressionb}
+\addplot [draw= magenta, domain=0:50000, forget plot] (x,\slope*x+\yintercept);
+\addplot[
+    color=red,
+    mark=square,
+    thick
+    ]
+    coordinates {
+      (1225,11.755333)
+      (4950,84.162854)
+      (11175,280.121112)
+      (19900,718.690892)
+      (31125,1436.837296)
+      (44850,2492.040605)
+    };
+    \addlegendentry{SSS}
+\addplot[mark=none, forget plot] table [y={create col/linear regression={}}]
+  {
+    X    Y
+    19900    718.690892
+    31125    1436.837296
+  };
+  \xdef\slope{\pgfplotstableregressiona}
+  \xdef\yintercept{\pgfplotstableregressionb}
+\addplot [draw= green, domain=0:50000, forget plot] (x,\slope*x+\yintercept);
+\end{axis}
+\end{tikzpicture}
+\caption{Wyniki dla grafu pełnego}
+\end{figure}
 
 \begin{table}[H]
   \centering
