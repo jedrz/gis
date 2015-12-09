@@ -5,6 +5,7 @@
 \usepackage{hyperref}
 \usepackage{color}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{float}
 
 % reset numerowania sekcji w częściach
@@ -127,6 +128,53 @@ osiągniemy odwiedzonych do~tej pory wierzchołków z~$V1$.
 \newpage
 
 \part{Sprawozdanie 2}
+
+\section{Dowód}
+\newtheorem{thesis}{Teza}
+\begin{thesis}
+Graf skierowany jest częściowo spójny wtedy i tylko wtedy,
+gdy istnieje ścieżka łącząca wszystkie wierzchołki.
+\end{thesis}
+
+\begin{proof}
+  Załóżmy, że graf $D$ jest częśćiowo spójny. Niech $Q$ będzie ścieżką
+  zawierającą maksymalną liczbę wierzchołków oraz zaczynającą się od
+  wierzchołka $v_1$ i kończącą na wierzchołku $v_2$. Jeśli $Q$ łączy wszystkie
+  wierzchołki, to nie ma czego udowadniać. Załóżmy więc, że $Q$ nie łączy
+  wszystkich wierzchołków. W takim wypadku musi istnieć wierzchołek $u$, który
+  nie jest częścią ścieżki $Q$. Oznacza to również, że nie istnieją ścieżki
+  z $u$ do $v_1$ oraz z $v_2$ do $u$. Ponieważ graf $D$ jest częśćiowo spójny
+  i nie zawiera ścieżki z $u$ do $v_1$, musi zawierać ścieżkę z $v_1$ do $u$.
+
+  Niech $w$ będzie wierzchołkiem takim, że $w != v_1$ i $w$ jest ostatnim
+  wierzchołkiem ścieżki $Q$, dla którego istnieje ścieżka z $w$ do $u$. Niech
+  $Q_1$ będzie ścieżką z $w$ do $u$ w grafie $D$. Niech $z$ będzie wierzchołkiem
+  będącym bezpośrednio za ostatnim wystąpieniem $w$ w ścieżce $Q$. Nie istnieje
+  więc ścieżka z $z$ do $u$. Ponieważ graf jest częśćiowo spójny, musi istnieć
+  ścieżka $Q_2$ z $u$ do $z$.
+
+  Podążając ścieżką $Q$ od $v-1$ do ostatniego wystąpienia $w$, a następnie ścieżkami
+  $Q_1$ oraz $Q_2$, a potem kolejno od $z$ do $v_2$ otrzymujemy ścieżkę, która
+  przechodzi przez więcej wierzchołków niż $Q$. Jest to sprzeczność, co oznacza, że $Q$
+  jest ścieżką przechodzącą przez wszystkie wierzchołki grafu.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[main node, on grid] (v1) {$v_1$};
+    \node[main node, on grid] (w)  [right = 2cm of v1] {$w$};
+    \node[main node, on grid] (z)  [right = 2cm of w] {$z$};
+    \node[main node, on grid] (v2) [right = 2cm of z] {$v_2$};
+    \node[main node, on grid] (u) [above = 3cm of w] {$u$};
+    \path[edge] (v1) edge [->] node {} (w);
+    \path[edge] (w) edge [->] node {} (z);
+    \path[edge] (w) edge [->] node {$Q_1$} (u);
+    \path[edge] (u) edge [->] node {$Q_2$} (z);
+    \path[edge] (z) edge [->] node {} (v2);
+  \end{tikzpicture}
+\end{figure}
+
+\end{proof}
 
 \section{Algorytmy}
 
